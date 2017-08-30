@@ -1,3 +1,48 @@
-.helloInput {
-  width: 200px;
+.container {
+    width: 100%;
+    height: auto;
+    background-image: -ms-linear-gradient(bottom, #266BE2 0%, #70dbff 100%);
+    /* Mozilla Firefox */
+    background-image: -moz-linear-gradient(bottom, #266BE2 0%, #70dbff 100%);
+    /* Opera */
+    background-image: -o-linear-gradient(bottom, #266BE2 0%, #70dbff 100%);
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #266BE2), color-stop(1, #BF7F37));
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-linear-gradient(bottom, #266BE2 0%, #70dbff 100%);
+    /* W3C Markup, IE10 Release Preview */
+    background-image: linear-gradient(to top, #266BE2 0%, #70dbff 100%);
+    color: white;
+}
+
+.sectionButton {
+    display: inline-block;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 18px;
+    padding-top: 8px;
+    font-size: 18px;
+}
+
+#content {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 500px;
+}
+
+#sections {
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+    font-family: arial;
+}
+
+body {
+    height: 100%;
+    width: 100%;
 }
