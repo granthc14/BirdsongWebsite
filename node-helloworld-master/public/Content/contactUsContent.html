@@ -1,15 +1,22 @@
 <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
-<div id="map" style="width:600px;height:600px">
-<script>
-function myMap() {
-    var mapOptions = {
-        center: new google.maps.LatLng(35.982104, -88.078860),
-        zoom: 16,
-        mapTypeId: google.maps.MapTypeId.HYBRID
+<div id="map" style="width:50%;height:600px;display: inline-block;float: left;">
+    <script>
+    function myMap() {
+        var mapOptions = {
+            center: new google.maps.LatLng(35.982104, -88.078860),
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.HYBRID
+        }
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
     }
-var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-}
-</script>
 
-
+    </script>
+</div>
+<div id="info" style="width:50%;height:600px;text-align:center;position: relative;float: left;font-size: 18px;">
+    <span style="font-weight: bold;">Phone: </span><span>731-584-8787</span>
+    <br><br>
+    <span style="font-weight: bold;">Email: </span><span>info@birdsongdrive-in.com</span>
+    <br><br>
+    <span style="font-weight: bold;">Address: </span><span>907 Shiloh Church Rd</span><div>Camden, TN 38320</div><br>
+    <br><br>
 </div>

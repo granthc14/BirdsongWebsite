@@ -10,7 +10,6 @@ app.get('/', function (req, res) {
   res.send('Hello World')
 })
 
-
 //Make the api for the application
 
 // This responds with "Hello World" on the homepage
@@ -42,14 +41,6 @@ app.get('/ab*cd', function(req, res) {
    console.log("Got a GET request for /ab*cd");
    res.send('Page Pattern Match');
 })
-
-
-
-
-
-
-
-
 
 app.listen(port);
 console.log("Listening on port ", port);
