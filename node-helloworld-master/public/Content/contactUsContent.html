@@ -1,22 +1,44 @@
 <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
-<div id="map" style="width:50%;height:600px;display: inline-block;float: left;">
-    <script>
-    function myMap() {
-        var mapOptions = {
-            center: new google.maps.LatLng(35.982104, -88.078860),
-            zoom: 16,
-            mapTypeId: google.maps.MapTypeId.HYBRID
-        }
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    }
+<div class="w3-container">
+    <div class="w3-half w3-padding-32">
+        <div class="w3-container" id="map" style="max-width:96%; height:600px;">
+            <script>
+            function myMap() {
+                var mapOptions = {
+                    center: new google.maps.LatLng(35.982104, -88.078860),
+                    zoom: 16,
+                    mapTypeId: google.maps.MapTypeId.HYBRID
+                }
+                var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            }
 
-    </script>
+            </script>
+        </div>
+    </div>
+    <div class="w3-half w3-padding-32">
+        <div class="w3-card-4">
+            <header class="w3-container w3-blue">
+                <h1>Ticket Information</h1>
+            </header>
+            <div class="w3-container">
+                <ul> Box office opens at 6:30 PM</ul>
+                <ul><span style="font-weight: bold;">Admission</span>
+                    <ul>Adults: $7.00 per ticket</ul>
+                    <ul>Children ages 6-11: $4.00 per ticket</ul>
+                    <ul>Children 5 and Under: Free! </ul>
+                </ul>
+            </div>
+        </div>
+        <div class="w3-card-4" style="margin-top:20px;">
+            <header class="w3-container w3-blue">
+                <h1>Contact Information</h1>
+            </header>
+            <div class="w3-container">
+                <ul><span style="font-weight: bold;">Phone: </span><span>731-584-8787</span></ul>
+                <ul><span style="font-weight: bold;">Email: </span><span>info@birdsongdrive-in.com</span></ul>
+                <ul><span style="font-weight: bold;">Address: </span><span>907 Shiloh Church Rd. Camden, TN 38320</span></ul>
+            </div>
+        </div>
+    </div>
 </div>
-<div id="info" style="width:50%;height:600px;text-align:center;position: relative;float: left;font-size: 18px;">
-    <span style="font-weight: bold;">Phone: </span><span>731-584-8787</span>
-    <br><br>
-    <span style="font-weight: bold;">Email: </span><span>info@birdsongdrive-in.com</span>
-    <br><br>
-    <span style="font-weight: bold;">Address: </span><span>907 Shiloh Church Rd</span><div>Camden, TN 38320</div><br>
-    <br><br>
 </div>
