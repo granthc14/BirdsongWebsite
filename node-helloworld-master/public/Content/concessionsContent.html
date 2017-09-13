@@ -1,64 +1,96 @@
-<script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
+<style>
+table {
+    font-size: 18px;
+}
+
+</style>
+<div class="w3-container" style="width: 100%; text-align: center; font-size: 22px; font-weight: bold; padding: 32px;">
+    Combo Meal: 1 Large Popcorn, 2 Large drinks only $12!
+</div>
 <div class="w3-container">
     <div class="w3-half">
-        <div class="w3-card-4 w3-margin">
+        <div class="w3-card-4 w3-margin" id="foodHalf">
             <header class="w3-container w3-blue">
                 <h1>Food</h1>
             </header>
-            <div class="w3-container w3-padding-32" style="font-size: 18px;">
-                <ul> Box office opens at 6:30 PM</ul>
-                <ul><span style="font-weight: bold;">Admission</span>
-                    <ul>Adults: $7.00 per ticket</ul>
-                    <ul>Children ages 6-11: $4.00 per ticket</ul>
-                    <ul>Children 5 and Under: Free! </ul>
-                </ul>
-                <ul>
-                    <span style="font-weight: bold;"> Sound: </span><span>Our sound is FM Stereo transmitted through your vehicles stereo system or any handheld radio.</span>
-                    <br>
-                    <span>If you experience any hum or buzz, adjusting your trebble to the lowest setting will usually stop this.</span>
-                </ul>
-            </div>
+            <table class="w3-table w3-striped w3-padding-32">
+                <tr>
+                    <td>Hamburger</td>
+                    <td>$3.50</td>
+                </tr>
+                <tr>
+                    <td>Cheeseburger</td>
+                    <td>$4.00</td>
+                </tr>
+                <tr>
+                    <td>Hotdog</td>
+                    <td>$3.00</td>
+                </tr>
+                <tr>
+                    <td>Cheese Dog</td>
+                    <td>$3.50</td>
+                </tr>
+                <tr>
+                    <td>Chili-cheese Dog</td>
+                    <td>$4.00</td>
+                </tr>
+                <tr>
+                    <td>Small Nachos</td>
+                    <td>$3.50</td>
+                </tr>
+                <tr>
+                    <td>Large Nachos</td>
+                    <td>$5.00</td>
+                </tr>
+                <tr>
+                    <td>Chili-cheese Nachos</td>
+                    <td>$5.00</td>
+                </tr>
+                <tr>
+                    <td>Pickle</td>
+                    <td>$1.00</td>
+                </tr>
+                <tr>
+                    <td>Super Pretzel</td>
+                    <td>$3.50</td>
+                </tr>
+                <tr>
+                    <td>Super Pretzel with Cheese</td>
+                    <td>$4.00</td>
+                </tr>
+            </table>
         </div>
     </div>
     <div class="w3-half">
-        <div class="w3-card-4 w3-margin">
+        <div class="w3-card-4 w3-margin" id="drinkHalf" style="vertical-align: center;">
             <header class="w3-container w3-blue">
                 <h1>Drinks</h1>
             </header>
-            <div style="text-align: center; font-size: 18px; width: 100%;">Coca-Cola products, refills half price</div>
-            <div class="w3-container w3-padding-32" style="font-size: 18px;">
-                <ul> Box office opens at 6:30 PM</ul>
-                <ul><span style="font-weight: bold;">Admission</span>
-                    <ul>Adults: $7.00 per ticket</ul>
-                    <ul>Children ages 6-11: $4.00 per ticket</ul>
-                    <ul>Children 5 and Under: Free! </ul>
-                </ul>
-                <ul>
-                    <span style="font-weight: bold;"> Sound: </span><span>Our sound is FM Stereo transmitted through your vehicles stereo system or any handheld radio.</span>
-                    <br>
-                    <span>If you experience any hum or buzz, adjusting your trebble to the lowest setting will usually stop this.</span>
-                </ul>
-            </div>
-            <table class="w3-table w3-striped">
+            <div style="text-align: center; font-size: 18px; width: 100%; padding:32px;">Coca-Cola products, refills half price</div>
+            <table class="w3-table w3-striped w3-padding-32">
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Points</th>
+                    <td>Small</td>
+                    <td>$2.00</td>
                 </tr>
                 <tr>
-                    <td>Jill</td>
-                    <td>Smith</td>
-                    <td>50</td>
+                    <td>Medium</td>
+                    <td>$3.00</td>
                 </tr>
                 <tr>
-                    <td>Eve</td>
-                    <td>Jackson</td>
-                    <td>94</td>
+                    <td>Large</td>
+                    <td>$4.00</td>
                 </tr>
                 <tr>
-                    <td>Adam</td>
-                    <td>Johnson</td>
-                    <td>67</td>
+                    <td>Bottled Water</td>
+                    <td>$2.00</td>
+                </tr>
+                <tr>
+                    <td>Yoo-hoo</td>
+                    <td>$2.00</td>
+                </tr>
+                <tr>
+                    <td>Monster</td>
+                    <td>$3.00</td>
                 </tr>
             </table>
         </div>
@@ -67,45 +99,56 @@
 <br>
 <div class="w3-container">
     <div class="w3-half">
-        <div class="w3-card-4 w3-margin">
+        <div class="w3-card-4 w3-margin" id="popCornHalf">
             <header class="w3-container w3-blue">
                 <h1>Popcorn</h1>
             </header>
-            <div class="w3-container w3-padding-32" style="font-size: 18px;">
-                <ul> Box office opens at 6:30 PM</ul>
-                <ul><span style="font-weight: bold;">Admission</span>
-                    <ul>Adults: $7.00 per ticket</ul>
-                    <ul>Children ages 6-11: $4.00 per ticket</ul>
-                    <ul>Children 5 and Under: Free! </ul>
-                </ul>
-                <ul>
-                    <span style="font-weight: bold;"> Sound: </span><span>Our sound is FM Stereo transmitted through your vehicles stereo system or any handheld radio.</span>
-                    <br>
-                    <span>If you experience any hum or buzz, adjusting your trebble to the lowest setting will usually stop this.</span>
-                </ul>
-            </div>
+            <table class="w3-table w3-striped w3-padding-32">
+                <tr>
+                    <td>Small</td>
+                    <td>$3.00</td>
+                </tr>
+                <tr>
+                    <td>Medium</td>
+                    <td>$4.00</td>
+                </tr>
+                <tr>
+                    <td>Large</td>
+                    <td>$5.00</td>
+                </tr>
+                <tr>
+                    <td>Jumbo Bucket</td>
+                    <td>$7.00</td>
+                </tr>
+                <tr>
+                    <td>Bucket Refills</td>
+                    <td>$3.00</td>
+                </tr>
+            </table>
         </div>
     </div>
     <div class="w3-half">
-        <div class="w3-card-4 w3-margin">
+        <div class="w3-card-4 w3-margin" id="candyHalf">
             <header class="w3-container w3-blue">
                 <h1>Candy</h1>
             </header>
-            <div class="w3-container w3-padding-32" style="font-size: 18px;">
-                <ul> Box office opens at 6:30 PM</ul>
-                <ul><span style="font-weight: bold;">Admission</span>
-                    <ul>Adults: $7.00 per ticket</ul>
-                    <ul>Children ages 6-11: $4.00 per ticket</ul>
-                    <ul>Children 5 and Under: Free! </ul>
-                </ul>
-                <ul>
-                    <span style="font-weight: bold;"> Sound: </span><span>Our sound is FM Stereo transmitted through your vehicles stereo system or any handheld radio.</span>
-                    <br>
-                    <span>If you experience any hum or buzz, adjusting your trebble to the lowest setting will usually stop this.</span>
-                </ul>
-            </div>
+            <table class="w3-table w3-striped w3-padding-32">
+                <tr>
+                    <td>All Candy</td>
+                    <td>$2.50</td>
+                </tr>
+                <tr>
+                    <td>Cotton Candy</td>
+                    <td>$3.00</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>
 <br>
 <div style="text-align: center; color:red; font-weight: bold; font-size: 18px;">No alcohol served or allowed.</div>
+<script>
+$('#drinkHalf').height($('#foodHalf').height());
+$('#candyHalf').height($('#popCornHalf').height());
+
+</script>
