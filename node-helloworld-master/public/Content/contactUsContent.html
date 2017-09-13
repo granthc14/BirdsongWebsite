@@ -15,17 +15,22 @@
             </script>
         </div>
     </div>
-    <div class="w3-half w3-padding-32">
+    <div class="w3-half w3-padding-32" id="infoCards">
         <div class="w3-card-4">
             <header class="w3-container w3-blue">
                 <h1>Ticket Information</h1>
             </header>
-            <div class="w3-container">
+            <div class="w3-container w3-padding-32" style="font-size: 18px;">
                 <ul> Box office opens at 6:30 PM</ul>
                 <ul><span style="font-weight: bold;">Admission</span>
                     <ul>Adults: $7.00 per ticket</ul>
                     <ul>Children ages 6-11: $4.00 per ticket</ul>
                     <ul>Children 5 and Under: Free! </ul>
+                </ul>
+                <ul>
+                    <span style="font-weight: bold;"> Sound: </span><span>Our sound is FM Stereo transmitted through your vehicles stereo system or any handheld radio.</span>
+                    <br>
+                    <span>If you experience any hum or buzz, adjusting your trebble to the lowest setting will usually stop this.</span>
                 </ul>
             </div>
         </div>
@@ -33,7 +38,7 @@
             <header class="w3-container w3-blue">
                 <h1>Contact Information</h1>
             </header>
-            <div class="w3-container">
+            <div class="w3-container w3-padding-32" style="font-size: 18px;">
                 <ul><span style="font-weight: bold;">Phone: </span><span>731-584-8787</span></ul>
                 <ul><span style="font-weight: bold;">Email: </span><span>info@birdsongdrive-in.com</span></ul>
                 <ul><span style="font-weight: bold;">Address: </span><span>907 Shiloh Church Rd. Camden, TN 38320</span></ul>
@@ -42,3 +47,13 @@
     </div>
 </div>
 </div>
+
+
+<script type="text/javascript">
+    $('#map').height($('#infoCards').height());
+
+    window.onresize = function() {
+        $('#map').height($('#infoCards').height());
+    }
+
+</script>
