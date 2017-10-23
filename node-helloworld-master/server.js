@@ -1,7 +1,8 @@
 var express = require("express"),
     app = express();
-
+var request = require("request");
 var port = process.env.PORT || 8080;
+var theMovieDatabaseAPIKey = "86bd3a87e020e36bcbe442507b2c35c3";
 
 app.use(express.static(__dirname + '/public'));
 
@@ -10,37 +11,55 @@ app.get('/', function (req, res) {
   res.send('Hello World')
 })
 
-//Make the api for the application
 
-// This responds with "Hello World" on the homepage
-app.get('/', function (req, res) {
-   console.log("Got a GET request for the homepage");
-   res.send('Hello GET');
+
+
+
+app.get('/search_movie', function (req, res) {
+   var percentEncodedMovieName = req.query.movieName;
+   var baseUrl = "https://api.themoviedb.org/3/search/movie?api_key="
+               + theMovieDatabaseAPIKey
+               + "&language=en-US&query=" + percentEncodedMovieName
+               + "&page=1&include_adult=false";
+
+    request(baseUrl, function(error, response, body) {
+        res.send(body);
+    });
 })
 
-// This responds a POST request for the homepage
-app.post('/', function (req, res) {
-   console.log("Got a POST request for the homepage");
-   res.send('Hello POST');
+
+
+
+
+app.get('/get_food', function(req, res) {
+   var foodDict = {};
+   foodDict['Hamburger'] = "3.50";
+   foodDict['Cheeseburger'] = "4.00";
+   foodDict['Hotdog'] = "3.00";
+   foodDict['Cheesedog'] = "3.50";
+   foodDict['Chilicheesedog'] = "4.00";
+   foodDict['smallNachos'] = "3.50";
+   foodDict['largeNachos'] = "5.00";
+   foodDict['chiliCheeseNachos'] = "5.00";
+   foodDict['pickle'] = "1.00";
+   foodDict['superPretzel'] = "3.50";
+   foodDict['superPretzelWithCheese'] = "4.00";
+   res.send(JSON.stringify(foodDict));
 })
 
-// This responds a DELETE request for the /del_user page.
-app.delete('/del_user', function (req, res) {
-   console.log("Got a DELETE request for /del_user");
-   res.send('Hello DELETE');
+
+
+
+app.put('/new_movie1', function(req, res) {
+   movie1 = req.body.name;
+
+   request("")
+
+
 })
 
-// This responds a GET request for the /list_user page.
-app.get('/list_user', function (req, res) {
-   console.log("Got a GET request for /list_user");
-   res.send('Page Listing');
-})
 
-// This responds a GET request for abcd, abxcd, ab123cd, and so on
-app.get('/ab*cd', function(req, res) {   
-   console.log("Got a GET request for /ab*cd");
-   res.send('Page Pattern Match');
-})
+
 
 app.listen(port);
 console.log("Listening on port ", port);
