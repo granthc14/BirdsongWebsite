@@ -21,7 +21,7 @@ request("https://api.themoviedb.org/3/configuration?api_key=86bd3a87e020e36bcbe4
         console.log(error);
     }
     var resDict = JSON.parse(body);
-    baseUrl = resDict['images']['base_url'];
+    baseUrl = resDict['images']['base_url'] + "original";
 })
 
 
