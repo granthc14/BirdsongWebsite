@@ -1,6 +1,7 @@
 var express = require("express"),
     app = express();
 var request = require("request");
+var randomColor = require("randomcolor");
 var port = process.env.PORT || 8080;
 var theMovieDatabaseAPIKey = "86bd3a87e020e36bcbe442507b2c35c3";
 var baseUrl = "";
@@ -98,10 +99,32 @@ app.get('/get_movies', function(req, res) {
 
 app.put('/set_movies', function (req, res) {
     console.log(req);
-
-
     res.send("It's working, I just have to format it now. -Grant");
 })
+
+
+app.put('/order', function (req, res) {
+    var screenNo;
+    var orderNo;
+    var carMake;
+    var carModel;
+    var carColor;
+    var orderTime = new Date();
+    var cashOrCard;
+    var items;
+    var cost;
+    var displayNo;
+
+    orderNo = orderTime.getTime();
+
+    returnDict = {};
+    returnDict['orderNumber'] = orderNo;
+    returnDict['orderColor'] = randomColor();
+    returnDict['displayNumber'] = orderNo.toString().substr(orderNo.toString().length - 4);
+
+    res.send(JSON.stringify(returnDict));
+});
+
 
 
 app.listen(port);
