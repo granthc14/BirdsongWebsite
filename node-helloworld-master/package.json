@@ -4,10 +4,12 @@
   "dependencies": {
     "cf-deployment-tracker-client": "*",
     "commander": "^2.6.0",
-    "express": "^4.14.1",
+    "express": "^4.16.2",
     "http-post": "^0.1.1",
     "http-proxy": "^1.8.1",
-    "imdb-api": "^3.1.1"
+    "imdb-api": "^3.1.1",
+    "randomcolor": "^0.5.3",
+    "request": "^2.83.0"
   },
   "main": "server.js",
   "scripts": {
