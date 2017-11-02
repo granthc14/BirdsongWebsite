@@ -7,7 +7,7 @@ var theMovieDatabaseAPIKey = "86bd3a87e020e36bcbe442507b2c35c3";
 var baseUrl = "";
 var size = "";
 var fileSize = "";
-
+var orders = [];
 
 
 app.use(express.static(__dirname + '/public'));
@@ -22,7 +22,11 @@ request("https://api.themoviedb.org/3/configuration?api_key=86bd3a87e020e36bcbe4
     }
     var resDict = JSON.parse(body);
     baseUrl = resDict['images']['base_url'] + "original";
-})
+});
+
+app.get('/get_orders', function(req, res){
+    res.send(JSON.stringify(orders));
+});
 
 
 app.get('/search_movie', function (req, res) {
@@ -104,23 +108,42 @@ app.put('/set_movies', function (req, res) {
 
 
 app.put('/order', function (req, res) {
-    var screenNo;
-    var orderNo;
-    var carMake;
-    var carModel;
-    var carColor;
+
+
+    var screenNo = req.query.screenNo;
+    var orderNo = req.query.orderNo;
+    var carMake = req.query.carMake;
+    var carModel = req.query.carModel;
+    var carColor = req.query.carColor;
     var orderTime = new Date();
-    var cashOrCard;
-    var items;
-    var cost;
+    var cashOrCard = req.query.cashOrCard;
+    var orderItems = req.query.orderItems;
+    var cost = req.query.cost;
     var displayNo;
 
     orderNo = orderTime.getTime();
+
+    orderDict = {};
+    orderDict['screenNo'] = screenNo;
+    orderDict['orderNo'] = orderNo;
+    orderDict['carMake'] = carMake;
+    orderDict['carModel'] = carModel;
+    orderDict['carColor'] = carColor;
+    orderDict['orderTime'] = orderTime;
+    orderDict['cashOrCard'] = cashOrCard;
+    orderDict['orderItems'] = orderItems;
+    orderDict['cost'] = cost;
+    orderDict['displayNo'] =  orderNo.toString().substr(orderNo.toString().length - 4);;
+
+    orders.push(orderDict);
+
 
     returnDict = {};
     returnDict['orderNumber'] = orderNo;
     returnDict['orderColor'] = randomColor();
     returnDict['displayNumber'] = orderNo.toString().substr(orderNo.toString().length - 4);
+
+
 
     res.send(JSON.stringify(returnDict));
 });
