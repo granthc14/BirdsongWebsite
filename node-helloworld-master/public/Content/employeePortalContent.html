@@ -2,45 +2,93 @@
 table {
     font-size: 18px;
 }
-
 </style>
-<div class="w3-container">
-        <div class="w3-card-4 w3-margin" style="overflow-x: auto;">
-            <header class="w3-container w3-blue">
-                <h1>Incoming Orders</h1>
-            </header>
-            <table class="w3-table w3-striped w3-padding-32">
-              <tbody>
-                <tr>
-                    <th>Item</th>
-                    <th>Amount</th>
-                    <th>Order Number and Color</th>
-                    <th>Car Information</th>
-                    <th>Total Cost</th>
-                </tr>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-                <tr>
-                    <td>Hamburger</td>
-                    <td>1</td>
-                    <td>1 yellow</td>
-                    <td>2011 red Toyota Camry</td>
-                    <td>$3.50</td>
-                </tr>
-                <tr>
-                    <td>Large Popcorn</td>
-                    <td>2</td>
-                    <td>1 yellow</td>
-                    <td>2011 red Toyota Camry</td>
-                    <td>$10.00</td>
-                </tr>
-                <tr>
-                    <td>Small Coke</td>
-                    <td>1</td>
-                    <td>2 orange</td>
-                    <td>2009 black Ford Escape</td>
-                    <td>$2.00</td>
-                </tr>
-              </tbody>
-            </table>
-        </div>
+
+<div class="w3-container">
+  <div class="w3-card-4 w3-margin" style="overflow-x: auto;">
+      <header class="w3-container w3-blue">
+          <h1>Incoming Orders</h1>
+      </header>
+
+      <table class="w3-table w3-striped w3-padding-32">
+        <tbody>
+          <tr>
+              <th>Order Number</th>
+              <th>Screen</th>
+              <th>Car Information</th>
+              <th>Display Number</th>
+              <th>Time Ordered</th>
+              <th>Cash or Card</th>
+              <th>Total Cost</th>
+          </tr>
+        </tbody>
+      </table>
+  </div>
 </div>
+
+<script>
+
+$(document).ready(function() {
+  //load orders when the page first loads
+  $.getJSON("http://birdsong.mybluemix.net/get_orders", function(data) {
+    $.each(data, function(i, item) {
+      // var d = item.orderTime;
+      // console.log(d);
+      // d.toLocaleTimeString('en-us');
+        var $tr=$('<tr class=\'tableBody\'></tr>');
+        $tr.append($('<td><a href=\'orderDetails.html?orderNo='+item.orderNo+'\'>'+item.orderNo+'</a></td>'));
+        $tr.append($('<td></td>',{text : item.screenNo}));
+        $tr.append($('<td></td>',{text : item.carColor
+            + ' ' + item.carMake + ' ' + item.carModel}));
+        $tr.append($('<td></td>',{text : item.displayNo}));
+        $tr.append($('<td></td>',{text : item.orderTime}));
+        $tr.append($('<td></td>',{text : item.cashOrCard}));
+        // so this doesn't show 'undefined' all over the table for now
+        if(item.cost != undefined) {
+          $tr.append($('<td></td>',{text : '$'+item.cost}));
+        }
+        else {
+          $tr.append($('<td></td>'));
+        }
+        $('#content').find('tbody').append($tr);
+    });
+  });
+
+  //then refresh the orders every time the json changes (i.e., a new order comes in)
+  var previous = null;
+  var current = null;
+  setInterval(function() {
+      $.getJSON("http://birdsong.mybluemix.net/get_orders", function(json) {
+          current = JSON.stringify(json);
+          if (previous && current && previous !== current) {
+            $.each(data, function(i, item) {
+              $('#content').find('.tableBody').empty();
+              // var d = item.orderTime;
+              // console.log(d);
+              // d.toLocaleTimeString('en-us');
+                var $tr=$('<tr class=\'tableBody\'></tr>');
+                $tr.append($('<td><a href=\'orderDetails.html?orderNo='+item.orderNo+'\'>'+item.orderNo+'</a></td>'));
+                $tr.append($('<td></td>',{text : item.screenNo}));
+                $tr.append($('<td></td>',{text : item.carColor
+                    + ' ' + item.carMake + ' ' + item.carModel}));
+                $tr.append($('<td></td>',{text : item.displayNo}));
+                $tr.append($('<td></td>',{text : item.orderTime}));
+                $tr.append($('<td></td>',{text : item.cashOrCard}));
+                $tr.append($('<td></td>',{text : item.totalCost}));
+                $('#content').find('tbody').append($tr);
+            });
+          }
+          previous = current;
+      });
+  }, 2000);
+});
+
+// janky but i'm gonna refresh this table every five seconds for now to display
+// "real time" data
+// setInterval(function() {
+//   loadTable();
+// }, 10000);
+
+</script>

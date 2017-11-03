@@ -11,7 +11,7 @@
       <input class="w3-input w3-border" type="text" id="username">
       <br>
       <label class="w3-text-blue"><b>Password</b></label>
-      <input class="w3-input w3-border" type="text" id="password">
+      <input class="w3-input w3-border" type="password" id="password">
       <br>
       <center><button class="w3-btn w3-blue" id="submitBtn">Submit</button></center>
     </div>
@@ -19,6 +19,12 @@
 
 <script>
   $(document).ready(function() {
+    $("#password").keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#submitBtn").click();
+    }
+});
+
     $('#submitBtn').click(function() {
       var username = $('#username').val();
       var password = $('#password').val();

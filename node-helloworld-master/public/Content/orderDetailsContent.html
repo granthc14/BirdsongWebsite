@@ -1,0 +1,62 @@
+<style>
+table {
+    font-size: 18px;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+
+<div class="w3-container">
+  <div class="w3-card-4 w3-margin" style="overflow-x: auto;">
+      <header class="w3-container w3-blue">
+          <h1 id="orderNum">Order Number: </h1>
+      </header>
+
+      <table class="w3-table w3-striped w3-padding-32">
+        <tbody>
+          <tr>
+              <th>Item Name</th>
+              <th>Item Price</th>
+              <th>Amount</th>
+              <th>Total Cost</th>
+              <th>Condiments</th>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
+
+<script>
+
+$(document).ready(function () {
+  var url = document.location.href;
+  var params = url.split('?')[1];
+  var orderNo = params.split('=')[1];
+  $('#orderNum').append(''+orderNo);
+
+    //use the order number to find the contents of the order from original json
+    $.getJSON("http://birdsong.mybluemix.net/get_orders", function(data) {
+      function getOrderContents(orderNum) {
+        return data.filter(
+            function(data){ return data.orderNo == orderNo }
+        );
+      }
+
+      var orderDetails = JSON.parse(getOrderContents(orderNo)[0].orderItems);
+
+      $.each(orderDetails, function(i, item) {
+        console.log(item);
+        // var d = item.orderTime;
+        // console.log(d);
+        // d.toLocaleTimeString('en-us');
+          var $tr=$('<tr class=\'tableBody\'></tr>');
+          $tr.append($('<td></td>',{text : item.name}));
+          $tr.append($('<td></td>',{text : '$'+item.price}));
+          $tr.append($('<td></td>',{text : item.amount}));
+          $tr.append($('<td></td>',{text : '$'+item.itemTotal}));
+          $tr.append($('<td></td>',{text : item.condiments}));
+          $('#content').find('tbody').append($tr);
+      });
+    });
+});
+</script>
