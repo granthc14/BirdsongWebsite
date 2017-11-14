@@ -120,6 +120,7 @@ app.put('/order', function (req, res) {
     var orderItems = req.query.orderItems;
     var cost = req.query.cost;
     var displayNo;
+    var isCompleted = false;
 
     orderNo = orderTime.getTime();
 
@@ -134,6 +135,7 @@ app.put('/order', function (req, res) {
     orderDict['orderItems'] = orderItems;
     orderDict['cost'] = cost;
     orderDict['displayNo'] =  orderNo.toString().substr(orderNo.toString().length - 4);;
+    orderDict['isCompleted'] = isCompleted;
 
     orders.push(orderDict);
 
