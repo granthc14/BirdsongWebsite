@@ -45,7 +45,7 @@ $(document).ready(function() {
   //load orders when the page first loads
   $.getJSON("http://birdsong.mybluemix.net/get_orders", function(data) {
     $.each(data, function(i, item) {
-      // if (item.isCompleted == false) {
+      if (item.isCompleted == false) {
         var time = item.orderTime;
         time = time.split('T')[1];
         time = time.split(":");
@@ -56,20 +56,19 @@ $(document).ready(function() {
         }
         time = time[0] + ":" + time[1] + " " + amPm;
 
-          var $tr=$('<tr class=\'tableBody\'></tr>');
-          $tr.append($('<td><a target="_blank" href=\'orderDetails.html?orderNo='+item.orderNo+'\'>'+item.orderNo+'</a></td>'));
-          $tr.append($('<td></td>',{text : item.screenNo}));
-          $tr.append($('<td></td>',{text : item.carColor
-              + ' ' + item.carMake + ' ' + item.carModel}));
-          $tr.append($('<td></td>',{text : item.displayNo}));
-          $tr.append($('<td></td>',{text : time}));
-          $tr.append($('<td></td>',{text : item.cashOrCard}));
-          $tr.append($('<td></td>',{text : '$'+item.cost}));
-          //need to add an onclick here to change isCompleted JSON field to 'true'
-          $tr.append($('<td style="text-align: center;"><a class="checkmark" href="#"><span class="glyphicon glyphicon-ok"></span></a></td>'))
-          $tr.append($('<td></td>'));
-          $('#content').find('tbody').append($tr);
-      // }
+        var $tr=$('<tr class=\'tableBody\'></tr>');
+        $tr.append($('<td><a target="_blank" href=\'orderDetails.html?orderNo='+item.orderNo+'\'>'+item.orderNo+'</a></td>'));
+        $tr.append($('<td></td>',{text : item.screenNo}));
+        $tr.append($('<td></td>',{text : item.carColor
+            + ' ' + item.carMake + ' ' + item.carModel}));
+        $tr.append($('<td></td>',{text : item.displayNo}));
+        $tr.append($('<td></td>',{text : time}));
+        $tr.append($('<td></td>',{text : item.cashOrCard}));
+        $tr.append($('<td></td>',{text : '$'+item.cost}));
+        $tr.append($('<td style="text-align: center;"><a class="checkmark" href="#" id="'+item.orderNo+'"><span class="glyphicon glyphicon-ok"></span></a></td>'))
+        $tr.append($('<td></td>'));
+        $('#content').find('tbody').append($tr);
+      }
     });
   });
 
@@ -82,7 +81,7 @@ $(document).ready(function() {
           if (previous && current && previous !== current) {
             $('#content').find('.tableBody').empty();
             $.each(data, function(i, item) {
-              // if (item.isCompleted == false) {
+              if (item.isCompleted == false) {
                 var time = item.orderTime;
                 time = time.split('T')[1];
                 time = time.split(":");
@@ -93,24 +92,54 @@ $(document).ready(function() {
                 }
                 time = time[0] + ":" + time[1] + " " + amPm;
 
-                  var $tr=$('<tr class=\'tableBody\'></tr>');
-                  $tr.append($('<td><a target="_blank" href=\'orderDetails.html?orderNo='+item.orderNo+'\'>'+item.orderNo+'</a></td>'));
-                  $tr.append($('<td></td>',{text : item.screenNo}));
-                  $tr.append($('<td></td>',{text : item.carColor
-                      + ' ' + item.carMake + ' ' + item.carModel}));
-                  $tr.append($('<td></td>',{text : item.displayNo}));
-                  $tr.append($('<td></td>',{text : time}));
-                  $tr.append($('<td></td>',{text : item.cashOrCard}));
-                  $tr.append($('<td></td>',{text : item.totalCost}));
-                  //need to add an onclick here to change isCompleted JSON field to 'true'
-                  $tr.append($('<td style="text-align: center;"><a class="checkmark" href="#"><span class="glyphicon glyphicon-ok"></span></a></td>'))
-                  $('#content').find('tbody').append($tr);
-                // }
+                var $tr=$('<tr class=\'tableBody\'></tr>');
+                $tr.append($('<td><a target="_blank" href=\'orderDetails.html?orderNo='+item.orderNo+'\'>'+item.orderNo+'</a></td>'));
+                $tr.append($('<td></td>',{text : item.screenNo}));
+                $tr.append($('<td></td>',{text : item.carColor
+                    + ' ' + item.carMake + ' ' + item.carModel}));
+                $tr.append($('<td></td>',{text : item.displayNo}));
+                $tr.append($('<td></td>',{text : time}));
+                $tr.append($('<td></td>',{text : item.cashOrCard}));
+                $tr.append($('<td></td>',{text : item.totalCost}));
+                $tr.append($('<td style="text-align: center;"><a class="checkmark" href="#" id="'+item.orderNo+'"><span class="glyphicon glyphicon-ok"></span></a></td>'))
+                $('#content').find('tbody').append($tr);
+                }
             });
           }
           previous = current;
       });
   }, 2000);
+});
+
+//on clicking the checkmark, change JSON isCompleted field to 'true'
+$(document).on('click', '.checkmark', function() {
+  var self = $(this);
+  var id = self.attr('id');
+
+  $.getJSON("http://birdsong.mybluemix.net/get_orders", function(json) {
+    $.each(json, function(i, item) {
+      if (item.orderNo == id) {
+        item.isCompleted = true;
+        console.log(item.isCompleted);
+
+        $.ajax({
+          type: 'PUT',
+          url: '/complete_order',
+          dataType: 'JSON',
+          contentType: "application/json; charset=utf-8",
+          data: JSON.stringify(item),
+          success: function(data){
+            console.log('success');
+          },
+          error: function(data) {
+            console.log('error');
+          }
+        });
+
+        return false;
+      }
+    });
+  });
 });
 
 </script>

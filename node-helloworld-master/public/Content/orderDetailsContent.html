@@ -46,9 +46,6 @@ $(document).ready(function () {
 
       $.each(orderDetails, function(i, item) {
         console.log(item);
-        // var d = item.orderTime;
-        // console.log(d);
-        // d.toLocaleTimeString('en-us');
           var $tr=$('<tr class=\'tableBody\'></tr>');
           $tr.append($('<td></td>',{text : item.name}));
           $tr.append($('<td></td>',{text : '$'+item.price}));

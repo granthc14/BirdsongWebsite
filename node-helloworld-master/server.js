@@ -8,7 +8,10 @@ var baseUrl = "";
 var size = "";
 var fileSize = "";
 var orders = [];
-
+var foodList = [];
+var drinkList = [];
+var popcornList = [];
+var candyList = [];
 
 app.use(express.static(__dirname + '/public'));
 
@@ -42,21 +45,83 @@ app.get('/search_movie', function (req, res) {
 })
 
 app.get('/get_food', function(req, res) {
-   var foodDict = {};
-   foodDict['Hamburger'] = "3.50";
-   foodDict['Cheeseburger'] = "4.00";
-   foodDict['Hotdog'] = "3.00";
-   foodDict['Cheesedog'] = "3.50";
-   foodDict['Chilicheesedog'] = "4.00";
-   foodDict['smallNachos'] = "3.50";
-   foodDict['largeNachos'] = "5.00";
-   foodDict['chiliCheeseNachos'] = "5.00";
-   foodDict['pickle'] = "1.00";
-   foodDict['superPretzel'] = "3.50";
-   foodDict['superPretzelWithCheese'] = "4.00";
-   res.send(JSON.stringify(foodDict));
+   // var foodDict = {};
+   // foodDict = {};
+   // foodDict['Hamburger'] = "3.50";
+   // foodDict['Cheeseburger'] = "4.00";
+   // foodDict['Hotdog'] = "3.00";
+   // foodDict['Cheesedog'] = "3.50";
+   // foodDict['Chilicheesedog'] = "4.00";
+   // foodDict['smallNachos'] = "3.50";
+   // foodDict['largeNachos'] = "5.00";
+   // foodDict['chiliCheeseNachos'] = "5.00";
+   // foodDict['pickle'] = "1.00";
+   // foodDict['superPretzel'] = "3.50";
+   // foodDict['superPretzelWithCheese'] = "4.00";
+   // res.send(JSON.stringify(foodDict));
+
+   foodDict['name'] = "Hamburger";
+   foodDict['price'] = "3.50";
+
+   res.send(JSON.stringify(foodList));
 })
 
+app.put('/add_food', function(req, res) {
+  console.log(req);
+  var name = req.query.name;
+  var price = req.query.price;
+
+  foodDict = {};
+  foodDict['name'] = name;
+  foodDict['price'] = price;
+
+  foodList.push(foodDict);
+})
+
+app.get('/get_drinks', function(req, res) {
+   res.send(JSON.stringify(drinkList));
+})
+
+app.put('/add_drink', function(req, res) {
+  var name = req.query.name;
+  var price = req.query.price;
+
+  drinkDict = {};
+  drinkDict['name'] = name;
+  drinkDict['price'] = price;
+
+  drinkList.push(drinkDict);
+})
+
+app.get('/get_popcorn', function(req, res) {
+   res.send(JSON.stringify(popcornList));
+})
+
+app.put('/add_popcorn', function(req, res) {
+  var name = req.query.name;
+  var price = req.query.price;
+
+  popcornDict = {};
+  popcornDict['name'] = name;
+  popcornDict['price'] = price;
+
+  popcornList.push(popcornDict);
+})
+
+app.get('/get_candy', function(req, res) {
+   res.send(JSON.stringify(candyList));
+})
+
+app.put('/add_candy', function(req, res) {
+  var name = req.query.name;
+  var price = req.query.price;
+
+  candyDict = {};
+  candyDict['name'] = name;
+  candyDict['price'] = price;
+
+  candyList.push(candyDict);
+})
 
 app.get('/get_movies', function(req, res) {
     var movies = {};
@@ -106,7 +171,6 @@ app.put('/set_movies', function (req, res) {
     res.send("It's working, I just have to format it now. -Grant");
 })
 
-
 app.put('/order', function (req, res) {
 
 
@@ -150,7 +214,14 @@ app.put('/order', function (req, res) {
     res.send(JSON.stringify(returnDict));
 });
 
+//change order status to complete once an order is done
+app.put('/complete_order', function(req, res) {
+    console.log(req);
 
+    var orderNo = req.query.orderNo;
+    var order = $.grep(orders, function(e){ return e.orderNo == orderNo; });
+    order.isCompleted = true;
+})
 
 app.listen(port);
 console.log("Listening on port ", port);
