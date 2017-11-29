@@ -14,6 +14,7 @@ var popcornList = [];
 var candyList = [];
 
 app.use(express.static(__dirname + '/public'));
+app.enable('trust proxy');
 
 
 
