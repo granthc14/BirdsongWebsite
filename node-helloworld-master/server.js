@@ -24,6 +24,7 @@ var orders = [{"orderNo":12,"isCompleted":false}];
 var concessionList = [];
 
 app.use(express.static(__dirname + '/public'));
+app.enable('trust proxy');
 
 
 
