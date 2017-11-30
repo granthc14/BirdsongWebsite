@@ -14,50 +14,9 @@ table {
                 <h1>Food</h1>
             </header>
             <table class="w3-table w3-striped w3-padding-32">
-                <tr>
-                    <td>Hamburger</td>
-                    <td>$3.50</td>
-                </tr>
-                <tr>
-                    <td>Cheeseburger</td>
-                    <td>$4.00</td>
-                </tr>
-                <tr>
-                    <td>Hotdog</td>
-                    <td>$3.00</td>
-                </tr>
-                <tr>
-                    <td>Cheese Dog</td>
-                    <td>$3.50</td>
-                </tr>
-                <tr>
-                    <td>Chili-cheese Dog</td>
-                    <td>$4.00</td>
-                </tr>
-                <tr>
-                    <td>Small Nachos</td>
-                    <td>$3.50</td>
-                </tr>
-                <tr>
-                    <td>Large Nachos</td>
-                    <td>$5.00</td>
-                </tr>
-                <tr>
-                    <td>Chili-cheese Nachos</td>
-                    <td>$5.00</td>
-                </tr>
-                <tr>
-                    <td>Pickle</td>
-                    <td>$1.00</td>
-                </tr>
-                <tr>
-                    <td>Super Pretzel</td>
-                    <td>$3.50</td>
-                </tr>
-                <tr>
-                    <td>Super Pretzel with Cheese</td>
-                    <td>$4.00</td>
-                </tr>
+              <tbody>
+                <!-- food populates here -->
+              </tbody>
             </table>
         </div>
     </div>
@@ -68,30 +27,9 @@ table {
             </header>
             <div style="text-align: center; font-size: 18px; width: 100%; padding:32px;">Coca-Cola products.<br/>Refills half price.</div>
             <table class="w3-table w3-striped w3-padding-32">
-                <tr>
-                    <td>Small</td>
-                    <td>$2.00</td>
-                </tr>
-                <tr>
-                    <td>Medium</td>
-                    <td>$3.00</td>
-                </tr>
-                <tr>
-                    <td>Large</td>
-                    <td>$4.00</td>
-                </tr>
-                <tr>
-                    <td>Bottled Water</td>
-                    <td>$2.00</td>
-                </tr>
-                <tr>
-                    <td>Yoo-hoo</td>
-                    <td>$2.00</td>
-                </tr>
-                <tr>
-                    <td>Monster</td>
-                    <td>$3.00</td>
-                </tr>
+              <tbody>
+                <!-- drinks populate here -->
+              </tbody>
             </table>
         </div>
     </div>
@@ -99,31 +37,14 @@ table {
 <br>
 <div class="w3-container">
     <div class="w3-half">
-        <div class="w3-card-4 w3-margin" id="popCornHalf">
+        <div class="w3-card-4 w3-margin" id="popcornHalf">
             <header class="w3-container w3-blue">
                 <h1>Popcorn</h1>
             </header>
             <table class="w3-table w3-striped w3-padding-32">
-                <tr>
-                    <td>Small</td>
-                    <td>$3.00</td>
-                </tr>
-                <tr>
-                    <td>Medium</td>
-                    <td>$4.00</td>
-                </tr>
-                <tr>
-                    <td>Large</td>
-                    <td>$5.00</td>
-                </tr>
-                <tr>
-                    <td>Jumbo Bucket</td>
-                    <td>$7.00</td>
-                </tr>
-                <tr>
-                    <td>Bucket Refills</td>
-                    <td>$3.00</td>
-                </tr>
+              <tbody>
+                <!-- popcorn populates here -->
+              </tbody>
             </table>
         </div>
     </div>
@@ -133,14 +54,9 @@ table {
                 <h1>Candy</h1>
             </header>
             <table class="w3-table w3-striped w3-padding-32">
-                <tr>
-                    <td>All Candy</td>
-                    <td>$2.50</td>
-                </tr>
-                <tr>
-                    <td>Cotton Candy</td>
-                    <td>$3.00</td>
-                </tr>
+              <tbody>
+                <!-- candy populates here -->
+              </tbody>
             </table>
         </div>
     </div>
@@ -150,6 +66,20 @@ table {
 <div style="text-align: center;"><a href="login.html">Employee Portal</a></div>
 <script>
 $('#drinkHalf').height($('#foodHalf').height());
-$('#candyHalf').height($('#popCornHalf').height());
+$('#candyHalf').height($('#popcornHalf').height());
+
+$(document).ready(function() {
+  //populate concession items from json string
+  $.getJSON("http://birdsong.mybluemix.net/get_concessions", function(data) {
+    $.each(data, function(i, item) {
+      var $tr=$('<tr class=\'tableBody\'></tr>');
+      $tr.append($('<td></td>',{text : item.name}));
+      $tr.append($('<td></td>',{text : '$'+item.price}));
+      $tr.append($('<td></td>'));
+      //append each item to the corresponding table (food, drinks, etc.)
+      $('#'+item.type+'Half').find('tbody').append($tr);
+    });
+  });
+});
 
 </script>

@@ -1,14 +1,33 @@
 <style>
-table {
-    font-size: 18px;
-}
+  table {
+      font-size: 18px;
+  }
 
+  .add {
+    color: #4CAF50!important
+  }
+  .add:hover {
+      color: #4CAF50!important
+    }
+  .add:focus {
+      color: #4CAF50!important
+    }
 </style>
+
+<div class="w3-container">
+      <div class="w3-right-align">
+        <h2 class="w3-right-align">
+        <span class="add glyphicon glyphicon-plus" onclick="document.getElementById('concessionModal').style.display='block'">
+        </span>
+      </h2>
+      </div>
+</div>
+
 <div class="w3-container">
     <div class="w3-half">
         <div class="w3-card-4 w3-margin" id="foodHalf">
             <header class="w3-container w3-blue">
-                <h1>Food <span class="add" onclick="document.getElementById('foodModal').style.display='block'" style="float:right;">Add</span></h1>
+                <h1>Food</h1>
             </header>
             <table class="w3-table w3-striped w3-padding-32">
               <tbody>
@@ -20,7 +39,7 @@ table {
     <div class="w3-half">
         <div class="w3-card-4 w3-margin" id="drinkHalf" style="vertical-align: center;">
             <header class="w3-container w3-blue">
-                <h1>Drinks <span class="add" onclick="document.getElementById('drinkModal').style.display='block'"  style="float:right;">Add</span></h1>
+              <h1>Drinks</h1>
             </header>
             <table class="w3-table w3-striped w3-padding-32">
               <tbody>
@@ -33,9 +52,9 @@ table {
 <br>
 <div class="w3-container">
     <div class="w3-half">
-        <div class="w3-card-4 w3-margin" id="popCornHalf">
+        <div class="w3-card-4 w3-margin" id="popcornHalf">
             <header class="w3-container w3-blue">
-                <h1>Popcorn <span class="add" onclick="document.getElementById('popcornModal').style.display='block'"  style="float:right;">Add</span></h1>
+              <h1>Popcorn</h1>
             </header>
             <table class="w3-table w3-striped w3-padding-32">
               <tbody>
@@ -47,7 +66,7 @@ table {
     <div class="w3-half">
         <div class="w3-card-4 w3-margin" id="candyHalf">
             <header class="w3-container w3-blue">
-                <h1>Candy <span class="add" onclick="document.getElementById('candyModal').style.display='block'"  style="float:right;">Add</span></h1>
+              <h1>Candy</h1>
             </header>
             <table class="w3-table w3-striped w3-padding-32">
               <tbody>
@@ -59,91 +78,41 @@ table {
 </div>
 <br>
 
-<!-- modals for adding food/drink/etc. -->
-<div id="foodModal" class="w3-modal">
+<!-- modal for adding food/drink/etc. -->
+<div id="concessionModal" class="w3-modal">
   <div class="w3-modal-content">
 
     <header class="w3-container w3-green">
-      <span onclick="document.getElementById('foodModal').style.display='none'"
+      <span onclick="document.getElementById('concessionModal').style.display='none'"
       class="w3-button w3-display-topright">&times;</span>
-      <h2>Add Food</h2>
+      <h2>Add Concession Item</h2>
     </header>
-    <br><br>
+    <br>
 
     <div class="w3-container">
       <label class="w3-text-gray">Name</label>
-      <input class="w3-input w3-border" id="foodName" type="text" required></input>
+      <input class="w3-input w3-border" id="name" type="text" required></input>
       <br>
-      <label class="w3-text-gray">Price</label>
-      <input class="w3-input w3-border" id="foodPrice" type="number" required></input><br><br>
 
-      <button class="w3-button w3-green" id="foodSubmit">Submit</button><br><br>
+      <label class="w3-text-gray">Price</label>
+      <input class="w3-input w3-border" id="price" type="number" required></input>
+      <br>
+
+      <label class="w3-text-gray">Concession Type</label>
+      <select class="w3-select w3-border" id="concessionType" name="option">
+        <option value="" disabled selected>Choose concession type...</option>
+        <option value="food">Food</option>
+        <option value="drink">Drink</option>
+        <option value="popcorn">Popcorn</option>
+        <option value="candy">Candy</option>
+      </select>
+      <br><br>
+
+      <button class="w3-button w3-green" id="submitBtn">Submit</button><br><br>
     </div>
   </div>
 </div>
-<div id="drinkModal" class="w3-modal">
-  <div class="w3-modal-content">
 
-    <header class="w3-container w3-green">
-      <span onclick="document.getElementById('drinkModal').style.display='none'"
-      class="w3-button w3-display-topright">&times;</span>
-      <h2>Add Drink</h2>
-    </header>
-    <br><br>
-
-    <div class="w3-container">
-      <label class="w3-text-gray">Name</label>
-      <input class="w3-input w3-border" id="drinkName" type="text" required></input>
-      <br>
-      <label class="w3-text-gray">Price</label>
-      <input class="w3-input w3-border" id="drinkPrice" type="number" required></input><br><br>
-
-      <button class="w3-button w3-green" id="drinkSubmit">Submit</button><br><br>
-    </div>
-  </div>
-</div>
-<div id="popcornModal" class="w3-modal">
-  <div class="w3-modal-content">
-
-    <header class="w3-container w3-green">
-      <span onclick="document.getElementById('popcornModal').style.display='none'"
-      class="w3-button w3-display-topright">&times;</span>
-      <h2>Add Popcorn</h2>
-    </header>
-    <br><br>
-
-    <div class="w3-container">
-      <label class="w3-text-gray">Name</label>
-      <input class="w3-input w3-border" id="popcornName" type="text" required></input>
-      <br>
-      <label class="w3-text-gray">Price</label>
-      <input class="w3-input w3-border" id="popcornPrice" type="number" required></input><br><br>
-
-      <button class="w3-button w3-green" id="popcornSubmit">Submit</button><br><br>
-    </div>
-  </div>
-</div>
-<div id="candyModal" class="w3-modal">
-  <div class="w3-modal-content">
-
-    <header class="w3-container w3-green">
-      <span onclick="document.getElementById('candyModal').style.display='none'"
-      class="w3-button w3-display-topright">&times;</span>
-      <h2>Add Candy</h2>
-    </header>
-    <br><br>
-
-    <div class="w3-container">
-      <label class="w3-text-gray">Name</label>
-      <input class="w3-input w3-border" id="candyName" type="text" required></input>
-      <br>
-      <label class="w3-text-gray">Price</label>
-      <input class="w3-input w3-border" id="candyPrice" type="number" required></input><br><br>
-
-      <button class="w3-button w3-green" id="candySubmit">Submit</button><br><br>
-    </div>
-  </div>
-</div>
 
 <div id="successModal" class="w3-modal">
   <div class="w3-modal-content">
@@ -155,7 +124,7 @@ table {
     <br><br>
 
     <div class="w3-container">
-      <p>Item was successfully added!<br>Refresh the page to see the updated concessions menu.</p>
+      <p>Success!<br>Refresh the page to see the updated concessions menu.</p>
     </div>
   </div>
 </div>
@@ -165,89 +134,81 @@ table {
     <header class="w3-container w3-green">
       <span onclick="document.getElementById('failModal').style.display='none'"
       class="w3-button w3-display-topright">&times;</span>
-    </header>
-    <br><br>
+      <h2>&nbsp;</h2>
+    </header><br>
 
     <div class="w3-container">
-      <p>There was an error with adding your item.<br>Please try again.</p>
-    </div>
+      <h4>There was an error with adding or deleting this item.<br><br>Please try again.</h4>
+    </div><br>
   </div>
 </div>
 
 <script>
 $('#drinkHalf').height($('#foodHalf').height());
-$('#candyHalf').height($('#popCornHalf').height());
+$('#candyHalf').height($('#popcornHalf').height());
 
 $(document).ready(function() {
-  //populate food, drinks, etc. from json string
-  $.getJSON("http://birdsong.mybluemix.net/get_food", function(data) {
+  //populate concession items from json string
+  $.getJSON("/get_concessions", function(data) {
     $.each(data, function(i, item) {
-      console.log(item);
-
       var $tr=$('<tr class=\'tableBody\'></tr>');
-      $tr.append($('<td></td>',{text : item.Name}));
-      $tr.append($('<td></td>',{text : '$'+item.Price}));
-      $tr.append($('<td><a href="#">Delete</a></td>'));
+      $tr.append($('<td></td>',{text : item.name}));
+      $tr.append($('<td></td>',{text : '$'+item.price}));
+      $tr.append($('<td><a href="#" class="deleteBtn" data-name="'+item.name+'" data-price="'+item.price+'" data-type="'+item.type+'">Delete</a></td>'));
       $tr.append($('<td></td>'));
-      $('#foodHalf').find('tbody').append($tr);
+      //append each item to the corresponding table (food, drinks, etc.)
+      $('#'+item.type+'Half').find('tbody').append($tr);
     });
   });
 
-  $.getJSON("http://birdsong.mybluemix.net/get_drinks", function(data) {
-    $.each(data, function(i, item) {
-      console.log(item);
-
-      var $tr=$('<tr class=\'tableBody\'></tr>');
-      $tr.append($('<td></td>',{text : item.Name}));
-      $tr.append($('<td></td>',{text : '$'+item.Price}));
-      $tr.append($('<td><a href="#">Delete</a></td>'));
-      $tr.append($('<td></td>'));
-      $('#drinkHalf').find('tbody').append($tr);
-    });
-  });
-
-  $.getJSON("http://birdsong.mybluemix.net/get_popcorn", function(data) {
-    $.each(data, function(i, item) {
-      console.log(item);
-
-      var $tr=$('<tr class=\'tableBody\'></tr>');
-      $tr.append($('<td></td>',{text : item.Name}));
-      $tr.append($('<td></td>',{text : '$'+item.Price}));
-      $tr.append($('<td><a href="#">Delete</a></td>'));
-      $tr.append($('<td></td>'));
-      $('#popCornHalf').find('tbody').append($tr);
-    });
-  });
-
-  $.getJSON("http://birdsong.mybluemix.net/get_candy", function(data) {
-    $.each(data, function(i, item) {
-      console.log(item);
-
-      var $tr=$('<tr class=\'tableBody\'></tr>');
-      $tr.append($('<td></td>',{text : item.Name}));
-      $tr.append($('<td></td>',{text : '$'+item.Price}));
-      $tr.append($('<td><a href="#">Delete</a></td>'));
-      $tr.append($('<td></td>'));
-      $('#candyHalf').find('tbody').append($tr);
-    });
-  });
-
-  $('#foodSubmit').on('click', function() {
-    var name = $('#foodName').val();
-    var price = $('#foodPrice').val();
-    console.log(name+" "+price);
+  //add concession items
+  $('#submitBtn').on('click', function() {
+    var name = $('#name').val();
+    var price = $('#price').val();
+    var type = $('#concessionType').find(":selected").val();
     var jsonObj = {
       name: name,
-      price: price
+      price: price,
+      type: type
     }
 
     $.ajax({
       type: 'PUT',
-      url: '/add_food',
+      url: '/add_concession/',
       dataType: 'JSON',
       contentType: "application/json; charset=utf-8",
       data: JSON.stringify(jsonObj),
-      success: function(data){
+      success: function(data) {
+        $('#concessionModal').hide();
+        $('#successModal').show();
+      },
+      error: function(data) {
+        console.log('asdf');
+        $('#concessionModal').hide();
+        $('#failModal').show();
+      }
+    })
+  });
+
+  //delete concession items
+  $(document).on('click', '.deleteBtn', function() {
+    var self = $(this);
+    var name = self.data("name");
+    var price = self.data("price");
+    var type = self.data("type");
+    var jsonObj = {
+      name: name,
+      price: price,
+      type: type
+    }
+
+    $.ajax({
+      type: 'PUT',
+      url: '/delete_concession',
+      dataType: 'JSON',
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify(jsonObj),
+      success: function(data) {
         $('#successModal').show();
       },
       error: function(data) {
@@ -256,73 +217,5 @@ $(document).ready(function() {
     })
   });
 
-  $('#drinkSubmit').on('click', function() {
-    var name = $('#drinkName').val();
-    var price = $('#drinkPrice').val();
-    var jsonObj = {
-      name: name,
-      price: price
-    }
-
-    $.ajax({
-      type: 'PUT',
-      url: '/add_drink',
-      dataType: 'JSON',
-      contentType: "application/json; charset=utf-8",
-      data: JSON.stringify(jsonObj),
-      success: function(data){
-        $('#successModal').show();
-      },
-      error: function(data) {
-        $('#failModal').show();
-      }
-    })
-  });
-
-  $('#popcornSubmit').on('click', function() {
-    var name = $('#popcornName').val();
-    var price = $('#popcornPrice').val();
-    var jsonObj = {
-      name: name,
-      price: price
-    }
-
-    $.ajax({
-      type: 'PUT',
-      url: '/add_popcorn',
-      dataType: 'JSON',
-      contentType: "application/json; charset=utf-8",
-      data: JSON.stringify(jsonObj),
-      success: function(data){
-        $('#successModal').show();
-      },
-      error: function(data) {
-        $('#failModal').show();
-      }
-    })
-  });
-
-  $('#candySubmit').on('click', function() {
-    var name = $('#candyName').val();
-    var price = $('#candyPrice').val();
-    var jsonObj = {
-      name: name,
-      price: price
-    }
-
-    $.ajax({
-      type: 'PUT',
-      url: '/add_candy',
-      dataType: 'JSON',
-      contentType: "application/json; charset=utf-8",
-      data: JSON.stringify(jsonObj),
-      success: function(data){
-        $('#successModal').show();
-      },
-      error: function(data) {
-        $('#failModal').show();
-      }
-    })
-  });
 });
 </script>

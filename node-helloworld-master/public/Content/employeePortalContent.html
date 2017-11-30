@@ -43,7 +43,7 @@
 
 $(document).ready(function() {
   //load orders when the page first loads
-  $.getJSON("http://birdsong.mybluemix.net/get_orders", function(data) {
+  $.getJSON("/get_orders", function(data) {
     $.each(data, function(i, item) {
       if (item.isCompleted == false) {
         var time = item.orderTime;
@@ -76,11 +76,12 @@ $(document).ready(function() {
   var previous = null;
   var current = null;
   setInterval(function() {
-      $.getJSON("http://birdsong.mybluemix.net/get_orders", function(json) {
+      $.getJSON("/get_orders", function(json) {
+        console.log(json);
           current = JSON.stringify(json);
           if (previous && current && previous !== current) {
             $('#content').find('.tableBody').empty();
-            $.each(data, function(i, item) {
+            $.each(json, function(i, item) {
               if (item.isCompleted == false) {
                 var time = item.orderTime;
                 time = time.split('T')[1];
@@ -109,34 +110,21 @@ $(document).ready(function() {
           previous = current;
       });
   }, 2000);
-});
 
-//on clicking the checkmark, change JSON isCompleted field to 'true'
-$(document).on('click', '.checkmark', function() {
-  var self = $(this);
-  var id = self.attr('id');
+  //on clicking the checkmark, change JSON isCompleted field to 'true'
+  $(document).on('click', '.checkmark', function() {
+    var self = $(this);
+    var orderNo = self.attr('id');
 
-  $.getJSON("http://birdsong.mybluemix.net/get_orders", function(json) {
-    $.each(json, function(i, item) {
-      if (item.orderNo == id) {
-        item.isCompleted = true;
-        console.log(item.isCompleted);
-
-        $.ajax({
-          type: 'PUT',
-          url: '/complete_order',
-          dataType: 'JSON',
-          contentType: "application/json; charset=utf-8",
-          data: JSON.stringify(item),
-          success: function(data){
-            console.log('success');
-          },
-          error: function(data) {
-            console.log('error');
-          }
-        });
-
-        return false;
+    $.ajax({
+      type: 'PUT',
+      url: '/complete_order',
+      data: '{"orderNo":' + orderNo + "}",
+      success: function(data){
+        console.log('success');
+      },
+      error: function(data) {
+        console.log('error');
       }
     });
   });

@@ -1,17 +1,27 @@
 var express = require("express"),
     app = express();
+app.use (function(req, res, next) {
+    var data='';
+    req.setEncoding('utf8');
+    req.on('data', function(chunk) {
+       data += chunk;
+    });
+
+    req.on('end', function() {
+        req.body = data;
+        next();
+    });
+});
 var request = require("request");
 var randomColor = require("randomcolor");
+var jsonBody = require("body/json");
 var port = process.env.PORT || 8080;
 var theMovieDatabaseAPIKey = "86bd3a87e020e36bcbe442507b2c35c3";
 var baseUrl = "";
 var size = "";
 var fileSize = "";
-var orders = [];
-var foodList = [];
-var drinkList = [];
-var popcornList = [];
-var candyList = [];
+var orders = [{"orderNo":12,"isCompleted":false}];
+var concessionList = [];
 
 app.use(express.static(__dirname + '/public'));
 
@@ -31,7 +41,6 @@ app.get('/get_orders', function(req, res){
     res.send(JSON.stringify(orders));
 });
 
-
 app.get('/search_movie', function (req, res) {
    var percentEncodedMovieName = req.query.movieName;
    var url = "https://api.themoviedb.org/3/search/movie?api_key="
@@ -44,83 +53,38 @@ app.get('/search_movie', function (req, res) {
     });
 })
 
-app.get('/get_food', function(req, res) {
-   // var foodDict = {};
-   // foodDict = {};
-   // foodDict['Hamburger'] = "3.50";
-   // foodDict['Cheeseburger'] = "4.00";
-   // foodDict['Hotdog'] = "3.00";
-   // foodDict['Cheesedog'] = "3.50";
-   // foodDict['Chilicheesedog'] = "4.00";
-   // foodDict['smallNachos'] = "3.50";
-   // foodDict['largeNachos'] = "5.00";
-   // foodDict['chiliCheeseNachos'] = "5.00";
-   // foodDict['pickle'] = "1.00";
-   // foodDict['superPretzel'] = "3.50";
-   // foodDict['superPretzelWithCheese'] = "4.00";
-   // res.send(JSON.stringify(foodDict));
-
-   foodDict['name'] = "Hamburger";
-   foodDict['price'] = "3.50";
-
-   res.send(JSON.stringify(foodList));
+app.get('/get_concessions', function(req, res) {
+   res.send(JSON.stringify(concessionList));
 })
 
-app.put('/add_food', function(req, res) {
-  console.log(req);
-  var name = req.query.name;
-  var price = req.query.price;
+app.put('/add_concession', function(req, res) {
+  item = JSON.parse(req.body);
+  var name = item.name;
+  var price = item.price;
+  var type = item.type;
 
-  foodDict = {};
-  foodDict['name'] = name;
-  foodDict['price'] = price;
+  concessionDict = {};
+  concessionDict['name'] = name;
+  concessionDict['price'] = price;
+  concessionDict['type'] = type;
 
-  foodList.push(foodDict);
+  concessionList.push(concessionDict);
+  res.end('{"status" : 200}');
 })
 
-app.get('/get_drinks', function(req, res) {
-   res.send(JSON.stringify(drinkList));
-})
+app.put('/delete_concession', function(req, res) {
 
-app.put('/add_drink', function(req, res) {
-  var name = req.query.name;
-  var price = req.query.price;
+  item = JSON.parse(req.body);
+  var name = item.name;
+  var price = item.price;
+  var type = item.type;
 
-  drinkDict = {};
-  drinkDict['name'] = name;
-  drinkDict['price'] = price;
-
-  drinkList.push(drinkDict);
-})
-
-app.get('/get_popcorn', function(req, res) {
-   res.send(JSON.stringify(popcornList));
-})
-
-app.put('/add_popcorn', function(req, res) {
-  var name = req.query.name;
-  var price = req.query.price;
-
-  popcornDict = {};
-  popcornDict['name'] = name;
-  popcornDict['price'] = price;
-
-  popcornList.push(popcornDict);
-})
-
-app.get('/get_candy', function(req, res) {
-   res.send(JSON.stringify(candyList));
-})
-
-app.put('/add_candy', function(req, res) {
-  var name = req.query.name;
-  var price = req.query.price;
-
-  candyDict = {};
-  candyDict['name'] = name;
-  candyDict['price'] = price;
-
-  candyList.push(candyDict);
+  var index = concessionList.indexOf({"name":name,"price":price,"type":type});
+  console.log(index);
+  console.log('concessionList old = '+concessionList);
+  concessionList.splice(index, 1);
+  console.log('concessionList new = '+concessionList);
+  res.end('{"status" : 200}');
 })
 
 app.get('/get_movies', function(req, res) {
@@ -216,11 +180,16 @@ app.put('/order', function (req, res) {
 
 //change order status to complete once an order is done
 app.put('/complete_order', function(req, res) {
-    console.log(req);
+    item = JSON.parse(req.body);
 
-    var orderNo = req.query.orderNo;
-    var order = $.grep(orders, function(e){ return e.orderNo == orderNo; });
-    order.isCompleted = true;
+    var orderNo = item.orderNo;
+    for(i = 0; i < orders.length; i++) {
+      if(orders[i].orderNo = orderNo) {
+        orders[i].isCompleted = true;
+        break;
+      }
+    }
+    res.end('{"status" : 200}');
 })
 
 app.listen(port);
