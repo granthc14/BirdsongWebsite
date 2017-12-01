@@ -7,24 +7,44 @@ table {
 
 
 <div class="w3-container">
-  <div class="w3-card-4 w3-margin" style="overflow-x: auto;">
-      <header class="w3-container w3-blue">
-          <h1 id="orderNum">Order Number: </h1>
-      </header>
+  <div class="w3-twothird">
+    <div class="w3-card-4 w3-margin" style="overflow-x: auto;">
+        <header class="w3-container w3-blue">
+            <h1 id="orderNum">Order Number: </h1>
+        </header>
 
-      <table class="w3-table w3-striped w3-padding-32">
-        <tbody>
-          <tr>
-              <th>Item Name</th>
-              <th>Item Price</th>
-              <th>Amount</th>
-              <th>Total Cost</th>
-              <th>Extras</th>
-              <th>Condiments</th>
-              <th>Notes</th>
-          </tr>
-        </tbody>
-      </table>
+        <table id="orderTable" class="w3-table w3-striped w3-padding-32">
+          <tbody>
+            <tr>
+                <th>Item Name</th>
+                <th>Item Price</th>
+                <th>Amount</th>
+                <th>Total Cost</th>
+                <th>Extras</th>
+                <th>Condiments</th>
+                <th>Notes</th>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+
+  <div class="w3-third">
+    <div class="w3-card-4 w3-margin" style="overflow-x: auto;">
+        <header class="w3-container w3-blue">
+            <h1>&nbsp;</h1>
+        </header>
+
+        <table id="extrasTable" class="w3-table w3-striped w3-padding-32">
+          <tbody>
+            <tr>
+                <th>Extras</th>
+                <th>Condiments</th>
+                <th>Notes</th>
+            </tr>
+          </tbody>
+        </table>
+    </div>
   </div>
 </div>
 
@@ -37,14 +57,16 @@ $(document).ready(function () {
   $('#orderNum').append(''+orderNo);
 
     //use the order number to find the contents of the order from original json
-    $.getJSON("http://birdsong.mybluemix.net/get_orders", function(data) {
+    $.getJSON("/get_orders", function(data) {
       function getOrderContents(orderNum) {
         return data.filter(
             function(data){ return data.orderNo == orderNo }
         );
       }
 
-      var orderDetails = JSON.parse(getOrderContents(orderNo)[0].orderItems);
+      var order = JSON.parse(getOrderContents(orderNo)[0]);
+      var orderDetails = order.orderItems;
+      var extras = order.extras;
 
       $.each(orderDetails, function(i, item) {
           var $tr=$('<tr class=\'tableBody\'></tr>');
@@ -52,16 +74,19 @@ $(document).ready(function () {
           $tr.append($('<td></td>',{text : '$'+item.price}));
           $tr.append($('<td></td>',{text : item.amount}));
           $tr.append($('<td></td>',{text : '$'+item.itemTotal}));
-          $tr.append($('<td></td>',{text : item.condiments}));
-          $tr.append($('<td></td>',{text : item.extras.numKetchup+' Ketchup\n'+item.extras.numMustard+' Mustard\n'+item.extras.numMayonnaise+' Mayonnaise'}));
-          if (item.extras.notes != undefined) {
-            $tr.append($('<td></td>',{text : item.extras.notes}));
-          }
-          else {
-            $tr.append($('<td></td>'));
-          }
-          $('#content').find('tbody').append($tr);
+          $('#orderTable').find('tbody').append($tr);
       });
+
+      var $tr=$('<tr class=\'tableBody\'></tr>');
+      $tr.append($('<td></td>',{text : item.condiments}));
+      $tr.append($('<td></td>',{text : item.extras.numKetchup+' Ketchup\n'+item.extras.numMustard+' Mustard\n'+item.extras.numMayonnaise+' Mayonnaise'}));
+      if (item.extras.notes != undefined) {
+        $tr.append($('<td></td>',{text : item.extras.notes}));
+      }
+      else {
+        $tr.append($('<td></td>'));
+      }
+      $('#extrasTable').find('tbody').append($tr);
     });
 });
 </script>
