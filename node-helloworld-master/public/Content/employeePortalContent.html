@@ -62,7 +62,13 @@ $(document).ready(function() {
         $tr.append($('<td></td>',{text : item.screenNo}));
         $tr.append($('<td></td>',{text : item.carColor
             + ' ' + item.carMake + ' ' + item.carModel}));
-        $tr.append($('<td></td>',{text : item.extras.email}));
+        if (item.extras != undefined) {
+          $tr.append($('<td></td>',{text : item.extras.email}));
+        }
+        else {
+          $tr.append($('<td></td>'));
+          
+        }
         $tr.append($('<td></td>',{text : item.displayNo}));
         $tr.append($('<td></td>',{text : time}));
         $tr.append($('<td></td>',{text : item.cashOrCard}));
