@@ -4,21 +4,37 @@
   }
 
   .add {
-    color: #4CAF50!important
+    color: #4CAF50!important;
+    margin-right: 16px!important;
   }
   .add:hover {
-      color: #4CAF50!important
+      color: #4CAF50!important;
+      margin-right: 16px!important;
     }
   .add:focus {
-      color: #4CAF50!important
+      color: #4CAF50!important;
+      margin-right: 16px!important;
     }
+
+  .remove {
+    color: #f44336!important;
+    float: right;
+  }
+  .remove:hover {
+    color: #f44336!important;
+    float: right;
+  }
+  .remove:focus {
+    color: #f44336!important;
+    float: right;
+  }
 </style>
 
 <div class="w3-container">
       <div class="w3-right-align">
         <h2 class="w3-right-align">
-        <span class="add glyphicon glyphicon-plus" onclick="document.getElementById('concessionModal').style.display='block'">
-        </span>
+        <a href="#"><span class="add glyphicon glyphicon-plus" onclick="document.getElementById('concessionModal').style.display='block'">
+        </span></a>
       </h2>
       </div>
 </div>
@@ -106,15 +122,15 @@
 
     <div class="w3-container">
       <label class="w3-text-gray">Name</label>
-      <input class="w3-input w3-border" id="name" type="text" required></input>
+      <input class="concessionInput w3-input w3-border" id="name" type="text" required></input>
       <br>
 
       <label class="w3-text-gray">Price</label>
-      <input class="w3-input w3-border" id="price" type="number" required></input>
+      <input class="concessionInput w3-input w3-border" id="price" type="number" required></input>
       <br>
 
       <label class="w3-text-gray">Concession Type</label>
-      <select class="w3-select w3-border" id="concessionType" name="option">
+      <select class="concessionInput w3-select w3-border" id="concessionType" name="option">
         <option value="" disabled selected>Choose concession type...</option>
         <option value="food">Food</option>
         <option value="drink">Drink</option>
@@ -150,13 +166,13 @@
 
 //populate concession items from json string
 function loadConcessions() {
-  console.log('loading concessions');
   $.getJSON("/get_concessions", function(data) {
     $.each(data, function(i, item) {
       var $tr=$('<tr class=\'tableBody\'></tr>');
       $tr.append($('<td></td>',{text : item.name}));
       $tr.append($('<td></td>',{text : '$'+item.price}));
-      $tr.append($('<td><a href="#" class="deleteBtn" data-name="'+item.name+'" data-price="'+item.price+'" data-type="'+item.type+'">Delete</a></td>'));
+      $tr.append($('<td><a href="#" class="deleteBtn" data-name="'+item.name+'" data-price="'+item.price+'" data-type="'+item.type+'">'
+        +'<span class="remove glyphicon glyphicon-remove"></span></a></td>'));
       //append each item to the corresponding table (food, drinks, etc.)
       $('#'+item.type+'Half').find('tbody').append($tr);
     });
@@ -165,6 +181,18 @@ function loadConcessions() {
 
 $(document).ready(function() {
   loadConcessions();
+
+  //to make concession form submit on 'enter' and not just on clicking submit
+  $(".concessionInput").keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#submitBtn").click();
+    }
+  });
+  // $('select').change(function(event) {
+  //   if (event.keyCode === 13) {
+  //     $("#submitBtn").click();
+  //   }
+  // });
 
   //add concession items
   $('#submitBtn').on('click', function() {

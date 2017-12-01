@@ -4,13 +4,13 @@
   }
 
   .checkmark {
-    color: #f44336!important
+    color: #f44336!important;
   }
   .checkmark:hover {
-      color: #4CAF50!important
+      color: #4CAF50!important;
     }
   .checkmark:focus {
-      color: #4CAF50!important
+      color: #4CAF50!important;
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -47,7 +47,9 @@ $(document).ready(function() {
   $.getJSON("/get_orders", function(data) {
     $.each(data, function(i, item) {
       if (item.isCompleted == false) {
+        var extras = JSON.parse(item.extras);
         var time = item.orderTime;
+
         time = time.split('T')[1];
         time = time.split(":");
         amPm = "AM";
@@ -62,8 +64,8 @@ $(document).ready(function() {
         $tr.append($('<td></td>',{text : item.screenNo}));
         $tr.append($('<td></td>',{text : item.carColor
             + ' ' + item.carMake + ' ' + item.carModel}));
-        if (item.extras.email != undefined) {
-          $tr.append($('<td></td>',{text : item.extras.email}));
+        if (extras.email != undefined) {
+          $tr.append($('<td></td>',{text : extras.email}));
         }
         else {
           $tr.append($('<td>&nbsp;</td>'));
@@ -85,13 +87,14 @@ $(document).ready(function() {
   var current = null;
   setInterval(function() {
       $.getJSON("/get_orders", function(json) {
-        console.log(json);
           current = JSON.stringify(json);
           if (previous && current && previous !== current) {
             $('#content').find('.tableBody').empty();
             $.each(json, function(i, item) {
               if (item.isCompleted == false) {
+                var extras = JSON.parse(item.extras);
                 var time = item.orderTime;
+
                 time = time.split('T')[1];
                 time = time.split(":");
                 amPm = "AM";
@@ -106,6 +109,13 @@ $(document).ready(function() {
                 $tr.append($('<td></td>',{text : item.screenNo}));
                 $tr.append($('<td></td>',{text : item.carColor
                     + ' ' + item.carMake + ' ' + item.carModel}));
+                if (extras.email != undefined) {
+                  $tr.append($('<td></td>',{text : extras.email}));
+                }
+                else {
+                  $tr.append($('<td>&nbsp;</td>'));
+
+                }
                 $tr.append($('<td></td>',{text : item.displayNo}));
                 $tr.append($('<td></td>',{text : time}));
                 $tr.append($('<td></td>',{text : item.cashOrCard}));

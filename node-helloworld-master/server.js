@@ -41,6 +41,19 @@ app.get('/get_orders', function(req, res){
     res.send(JSON.stringify(orders));
 });
 
+//to use on incoming orders table so that we don't have to filter through such a large json string client side
+app.get('/get_recent_orders', function(req, res) {
+  //orders within the last two days
+  var d = new Date();
+  d.setDate(d.getDate()-2);
+
+  var recentOrders = orders.filter(function (e) {
+    return e.orderTime > d;
+  });
+
+  res.send(JSON.stringify(recentOrders));
+});
+
 app.get('/search_movie', function (req, res) {
    var percentEncodedMovieName = req.query.movieName;
    var url = "https://api.themoviedb.org/3/search/movie?api_key="
@@ -69,7 +82,6 @@ app.put('/add_concession', function(req, res) {
   concessionDict['type'] = type;
 
   concessionList.push(concessionDict);
-  console.log(concessionList);
   res.end('{"status" : 200}');
 })
 
@@ -87,9 +99,7 @@ app.put('/delete_concession', function(req, res) {
     }
     index++;
   }
-  console.log(index);
   concessionList.splice(index, 1);
-  console.log(concessionList);
 
   res.end('{"status" : 200}');
 })
