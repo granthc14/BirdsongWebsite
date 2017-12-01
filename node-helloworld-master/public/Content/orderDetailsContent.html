@@ -19,7 +19,9 @@ table {
               <th>Item Price</th>
               <th>Amount</th>
               <th>Total Cost</th>
+              <th>Extras</th>
               <th>Condiments</th>
+              <th>Notes</th>
           </tr>
         </tbody>
       </table>
@@ -45,13 +47,19 @@ $(document).ready(function () {
       var orderDetails = JSON.parse(getOrderContents(orderNo)[0].orderItems);
 
       $.each(orderDetails, function(i, item) {
-        console.log(item);
           var $tr=$('<tr class=\'tableBody\'></tr>');
           $tr.append($('<td></td>',{text : item.name}));
           $tr.append($('<td></td>',{text : '$'+item.price}));
           $tr.append($('<td></td>',{text : item.amount}));
           $tr.append($('<td></td>',{text : '$'+item.itemTotal}));
           $tr.append($('<td></td>',{text : item.condiments}));
+          $tr.append($('<td></td>',{text : item.extras.numKetchup+' Ketchup\n'+item.extras.numMustard+' Mustard\n'+item.extras.numMayonnaise+' Mayonnaise'}));
+          if (item.extras.notes != undefined) {
+            $tr.append($('<td></td>',{text : item.extras.notes}));
+          }
+          else {
+            $tr.append($('<td></td>'));
+          }
           $('#content').find('tbody').append($tr);
       });
     });

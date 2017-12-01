@@ -27,7 +27,8 @@
           <tr>
               <th>Order Number</th>
               <th>Screen</th>
-              <th>Car Information</th>
+              <th>Car Info</th>
+              <th>Email</th>
               <th>Display Number</th>
               <th>Time Ordered</th>
               <th>Cash or Card</th>
@@ -61,6 +62,7 @@ $(document).ready(function() {
         $tr.append($('<td></td>',{text : item.screenNo}));
         $tr.append($('<td></td>',{text : item.carColor
             + ' ' + item.carMake + ' ' + item.carModel}));
+        $tr.append($('<td></td>',{text : item.extras.email}));
         $tr.append($('<td></td>',{text : item.displayNo}));
         $tr.append($('<td></td>',{text : time}));
         $tr.append($('<td></td>',{text : item.cashOrCard}));

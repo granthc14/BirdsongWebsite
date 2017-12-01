@@ -14,13 +14,12 @@ app.use (function(req, res, next) {
 });
 var request = require("request");
 var randomColor = require("randomcolor");
-var jsonBody = require("body/json");
 var port = process.env.PORT || 8080;
 var theMovieDatabaseAPIKey = "86bd3a87e020e36bcbe442507b2c35c3";
 var baseUrl = "";
 var size = "";
 var fileSize = "";
-var orders = [{"orderNo":12,"isCompleted":false}];
+var orders = [];
 var concessionList = [];
 
 app.use(express.static(__dirname + '/public'));
@@ -70,6 +69,7 @@ app.put('/add_concession', function(req, res) {
   concessionDict['type'] = type;
 
   concessionList.push(concessionDict);
+  console.log(concessionList);
   res.end('{"status" : 200}');
 })
 
@@ -79,12 +79,18 @@ app.put('/delete_concession', function(req, res) {
   var name = item.name;
   var price = item.price;
   var type = item.type;
-
-  var index = concessionList.indexOf({"name":name,"price":price,"type":type});
+  
+  var index = 0;
+  for(var i = 0; i < concessionList.length; i++) {
+    if(concessionList[i].name == name && concessionList[i].price == price && concessionList[i].type == type) {
+      break;
+    }
+    index++;
+  }
   console.log(index);
-  console.log('concessionList old = '+concessionList);
   concessionList.splice(index, 1);
-  console.log('concessionList new = '+concessionList);
+  console.log(concessionList);
+
   res.end('{"status" : 200}');
 })
 

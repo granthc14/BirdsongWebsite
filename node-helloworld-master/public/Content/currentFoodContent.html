@@ -77,6 +77,21 @@
     </div>
 </div>
 <br>
+<div class="w3-container">
+    <div class="w3-half">
+        <div class="w3-card-4 w3-margin" id="condimentsHalf">
+            <header class="w3-container w3-blue">
+              <h1>Condiments</h1>
+            </header>
+            <table class="w3-table w3-striped w3-padding-32">
+              <tbody>
+                <!-- condiments populate here -->
+              </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+</div>
 
 <!-- modal for adding food/drink/etc. -->
 <div id="concessionModal" class="w3-modal">
@@ -105,6 +120,7 @@
         <option value="drink">Drink</option>
         <option value="popcorn">Popcorn</option>
         <option value="candy">Candy</option>
+        <option value="condiments">Condiments</option>
       </select>
       <br><br>
 
@@ -113,21 +129,6 @@
   </div>
 </div>
 
-
-<div id="successModal" class="w3-modal">
-  <div class="w3-modal-content">
-
-    <header class="w3-container w3-green">
-      <span onclick="document.getElementById('successModal').style.display='none'"
-      class="w3-button w3-display-topright">&times;</span>
-    </header>
-    <br><br>
-
-    <div class="w3-container">
-      <p>Success!<br>Refresh the page to see the updated concessions menu.</p>
-    </div>
-  </div>
-</div>
 <div id="failModal" class="w3-modal">
   <div class="w3-modal-content">
 
@@ -144,22 +145,26 @@
 </div>
 
 <script>
-$('#drinkHalf').height($('#foodHalf').height());
-$('#candyHalf').height($('#popcornHalf').height());
+// $('#drinkHalf').height($('#foodHalf').height());
+// $('#candyHalf').height($('#popcornHalf').height());
 
-$(document).ready(function() {
-  //populate concession items from json string
+//populate concession items from json string
+function loadConcessions() {
+  console.log('loading concessions');
   $.getJSON("/get_concessions", function(data) {
     $.each(data, function(i, item) {
       var $tr=$('<tr class=\'tableBody\'></tr>');
       $tr.append($('<td></td>',{text : item.name}));
       $tr.append($('<td></td>',{text : '$'+item.price}));
       $tr.append($('<td><a href="#" class="deleteBtn" data-name="'+item.name+'" data-price="'+item.price+'" data-type="'+item.type+'">Delete</a></td>'));
-      $tr.append($('<td></td>'));
       //append each item to the corresponding table (food, drinks, etc.)
       $('#'+item.type+'Half').find('tbody').append($tr);
     });
   });
+}
+
+$(document).ready(function() {
+  loadConcessions();
 
   //add concession items
   $('#submitBtn').on('click', function() {
@@ -179,11 +184,11 @@ $(document).ready(function() {
       contentType: "application/json; charset=utf-8",
       data: JSON.stringify(jsonObj),
       success: function(data) {
-        $('#concessionModal').hide();
-        $('#successModal').show();
+        // $('#concessionModal').hide();
+        location.reload();
+        loadConcessions();
       },
       error: function(data) {
-        console.log('asdf');
         $('#concessionModal').hide();
         $('#failModal').show();
       }
@@ -209,7 +214,8 @@ $(document).ready(function() {
       contentType: "application/json; charset=utf-8",
       data: JSON.stringify(jsonObj),
       success: function(data) {
-        $('#successModal').show();
+        location.reload();
+        loadConcessions();
       },
       error: function(data) {
         $('#failModal').show();
