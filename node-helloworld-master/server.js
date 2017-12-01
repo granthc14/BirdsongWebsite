@@ -79,7 +79,7 @@ app.put('/delete_concession', function(req, res) {
   var name = item.name;
   var price = item.price;
   var type = item.type;
-  
+
   var index = 0;
   for(var i = 0; i < concessionList.length; i++) {
     if(concessionList[i].name == name && concessionList[i].price == price && concessionList[i].type == type) {
@@ -153,6 +153,7 @@ app.put('/order', function (req, res) {
     var orderTime = new Date();
     var cashOrCard = req.query.cashOrCard;
     var orderItems = req.query.orderItems;
+    var extras = req.query.extras;
     var cost = req.query.cost;
     var displayNo;
     var isCompleted = false;
@@ -167,6 +168,7 @@ app.put('/order', function (req, res) {
     orderDict['carColor'] = carColor;
     orderDict['orderTime'] = orderTime;
     orderDict['cashOrCard'] = cashOrCard;
+    orderDict['extras'] = extras;
     orderDict['orderItems'] = orderItems;
     orderDict['cost'] = cost;
     orderDict['displayNo'] =  orderNo.toString().substr(orderNo.toString().length - 4);;

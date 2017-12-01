@@ -17,12 +17,10 @@ table {
           <tbody>
             <tr>
                 <th>Item Name</th>
+                <th>Extras</th>
                 <th>Item Price</th>
                 <th>Amount</th>
                 <th>Total Cost</th>
-                <th>Extras</th>
-                <th>Condiments</th>
-                <th>Notes</th>
             </tr>
           </tbody>
         </table>
@@ -38,7 +36,6 @@ table {
         <table id="extrasTable" class="w3-table w3-striped w3-padding-32">
           <tbody>
             <tr>
-                <th>Extras</th>
                 <th>Condiments</th>
                 <th>Notes</th>
             </tr>
@@ -63,14 +60,14 @@ $(document).ready(function () {
             function(data){ return data.orderNo == orderNo }
         );
       }
-
-      var order = JSON.parse(getOrderContents(orderNo)[0]);
-      var orderDetails = order.orderItems;
-      var extras = order.extras;
+      var order = getOrderContents(orderNo)[0];
+      var orderDetails = JSON.parse(order.orderItems);
+      var extras = JSON.parse(order.extras);
 
       $.each(orderDetails, function(i, item) {
           var $tr=$('<tr class=\'tableBody\'></tr>');
           $tr.append($('<td></td>',{text : item.name}));
+          $tr.append($('<td></td>',{text : item.condiments}));
           $tr.append($('<td></td>',{text : '$'+item.price}));
           $tr.append($('<td></td>',{text : item.amount}));
           $tr.append($('<td></td>',{text : '$'+item.itemTotal}));
@@ -78,10 +75,9 @@ $(document).ready(function () {
       });
 
       var $tr=$('<tr class=\'tableBody\'></tr>');
-      $tr.append($('<td></td>',{text : item.condiments}));
-      $tr.append($('<td></td>',{text : item.extras.numKetchup+' Ketchup\n'+item.extras.numMustard+' Mustard\n'+item.extras.numMayonnaise+' Mayonnaise'}));
-      if (item.extras.notes != undefined) {
-        $tr.append($('<td></td>',{text : item.extras.notes}));
+      $tr.append($('<td></td>',{text : extras.numKetchup+' Ketchup, '+extras.numMustard+' Mustard, '+extras.numMayonnaise+' Mayonnaise'}));
+      if (extras.notes != undefined) {
+        $tr.append($('<td></td>',{text : extras.notes}));
       }
       else {
         $tr.append($('<td></td>'));

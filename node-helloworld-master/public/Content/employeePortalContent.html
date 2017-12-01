@@ -62,12 +62,12 @@ $(document).ready(function() {
         $tr.append($('<td></td>',{text : item.screenNo}));
         $tr.append($('<td></td>',{text : item.carColor
             + ' ' + item.carMake + ' ' + item.carModel}));
-        if (item.extras != undefined) {
+        if (item.extras.email != undefined) {
           $tr.append($('<td></td>',{text : item.extras.email}));
         }
         else {
-          $tr.append($('<td></td>'));
-          
+          $tr.append($('<td>&nbsp;</td>'));
+
         }
         $tr.append($('<td></td>',{text : item.displayNo}));
         $tr.append($('<td></td>',{text : time}));
