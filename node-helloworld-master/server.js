@@ -203,7 +203,7 @@ app.put('/complete_order', function(req, res) {
 
     var orderNo = item.orderNo;
     for(i = 0; i < orders.length; i++) {
-      if(orders[i].orderNo = orderNo) {
+      if(orders[i].orderNo == orderNo) {
         orders[i].isCompleted = true;
         break;
       }
