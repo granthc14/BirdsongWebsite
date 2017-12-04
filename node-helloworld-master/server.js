@@ -232,6 +232,32 @@ app.put('/order', function (req, res) {
 app.put('/complete_order', function(req, res) {
     item = JSON.parse(req.body);
 
+    if(item.email != null) {
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'birdsongOrders@gmail.com',
+                pass: 'Birdsong2017'
+            }
+        });
+
+
+        var mailOptions = {
+            from: 'birdsongorders@gmail.com',
+            to: item.email,
+            subject: 'Order prepared. Do not reply',
+            text: 'Your order is on the way! \nThanks, and enjoy the show!'
+        };
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+    }
+
     var orderNo = item.orderNo;
     for(i = 0; i < orders.length; i++) {
       if(orders[i].orderNo == orderNo) {
