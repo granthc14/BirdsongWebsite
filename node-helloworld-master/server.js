@@ -1,6 +1,9 @@
 var express = require("express"),
     app = express();
 var nodemailer = require('nodemailer');
+var json2csv = require('json2csv');
+var writeFile = require('write');
+var fs = require('fs')
 app.use (function(req, res, next) {
     var data='';
     req.setEncoding('utf8');
@@ -237,6 +240,15 @@ app.put('/order', function (req, res) {
     orderDict['cost'] = cost;
     orderDict['displayNo'] =  orderNo.toString().substr(orderNo.toString().length - 4);;
     orderDict['isCompleted'] = isCompleted;
+
+    var fields = ['screenNo', 'orderNo', 'carMake', 'carModel', 'carColor', 'orderTime', 'cashOrCard', 'extras', 'email', 'orderItems', 'cost', 'displayNo', 'isCompleted'];
+    var csv = json2csv({data: orderDict, fields:fields})
+
+    fs.appendFile('orders.csv', csv, function(err) {
+        if (err) throw err;
+        console.log('file saved');
+    });
+
 
     orders.push(orderDict);
 
