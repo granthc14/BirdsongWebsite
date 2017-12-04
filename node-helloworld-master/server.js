@@ -76,11 +76,13 @@ app.put('/add_concession', function(req, res) {
   var name = item.name;
   var price = item.price;
   var type = item.type;
+  var hasCondiments = item.hasCondiments;
 
   concessionDict = {};
   concessionDict['name'] = name;
   concessionDict['price'] = price;
   concessionDict['type'] = type;
+  concessionDict['hasCondiments'] = hasCondiments;
 
   concessionList.push(concessionDict);
   res.end('{"status" : 200}');
@@ -92,10 +94,11 @@ app.put('/delete_concession', function(req, res) {
   var name = item.name;
   var price = item.price;
   var type = item.type;
+  var hasCondiments = item.hasCondiments;
 
   var index = 0;
   for(var i = 0; i < concessionList.length; i++) {
-    if(concessionList[i].name == name && concessionList[i].price == price && concessionList[i].type == type) {
+    if(concessionList[i].name == name && concessionList[i].price == price && concessionList[i].type == type && concessionList[i].hasCondiments == hasCondiments) {
       break;
     }
     index++;
