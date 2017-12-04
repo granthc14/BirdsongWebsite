@@ -65,6 +65,11 @@
             </header>
             <table class="w3-table w3-striped w3-padding-32">
               <tbody>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>&nbsp;</th>
+                </tr>
                 <!-- drinks populate here -->
               </tbody>
             </table>
@@ -80,6 +85,11 @@
             </header>
             <table class="w3-table w3-striped w3-padding-32">
               <tbody>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>&nbsp;</th>
+                </tr>
                 <!-- popcorn populates here -->
               </tbody>
             </table>
@@ -92,6 +102,11 @@
             </header>
             <table class="w3-table w3-striped w3-padding-32">
               <tbody>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>&nbsp;</th>
+                </tr>
                 <!-- candy populates here -->
               </tbody>
             </table>
@@ -166,11 +181,14 @@ function loadConcessions() {
       if (item.hasCondiments === true) {
         condiments = "Yes";
       }
+      var price = parseFloat(item.price).toFixed(2);
 
       var $tr=$('<tr class=\'tableBody\'></tr>');
       $tr.append($('<td></td>',{text : item.name}));
-      $tr.append($('<td></td>',{text : '$'+item.price}));
-      $tr.append($('<td></td>',{text : condiments}));
+      $tr.append($('<td></td>',{text : '$'+price}));
+      if (item.type == "food") {
+        $tr.append($('<td></td>',{text : condiments}));
+      }
       $tr.append($('<td><a href="#" class="deleteBtn" data-name="'+item.name+'" data-price="'+item.price+'" data-type="'+item.type+'" data-hasCondiments="'+item.hasCondiments+'">'
         +'<span class="remove glyphicon glyphicon-remove"></span></a></td>'));
       //append each item to the corresponding table (food, drinks, etc.)
@@ -200,7 +218,6 @@ $(document).ready(function() {
     var price = $('#price').val();
     var type = $('#concessionType').find(":selected").val();
     var hasCondiments = $('#condiments').is(':checked');
-    console.log(hasCondiments);
     var jsonObj = {
       name: name,
       price: price,

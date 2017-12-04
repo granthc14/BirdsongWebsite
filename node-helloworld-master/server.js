@@ -22,6 +22,36 @@ var fileSize = "";
 var orders = [];
 var concessionList = [];
 
+//default concession items in case the app crashes since there is no db
+//food
+concessionList.push({name:"Hamburger", price: 3.50, type: "food", hasCondiments: true, amount: 0});
+concessionList.push({name:"Cheeseburger", price: 4.00, type: "food", hasCondiments: true, amount: 0});
+concessionList.push({name:"Hot Dog", price: 3.00, type: "food", hasCondiments: false, amount: 0});
+concessionList.push({name:"Cheese Dog", price: 3.50, type: "food", hasCondiments: false, amount: 0});
+concessionList.push({name:"Chili-Cheese Dog", price: 4.00, type: "food", hasCondiments: false, amount: 0});
+concessionList.push({name:"Small Nachos", price: 3.00, type: "food", hasCondiments: false, amount: 0});
+concessionList.push({name:"Large Nachos", price: 5.00, type: "food", hasCondiments: false, amount: 0});
+concessionList.push({name:"Chili-Cheese Nachos", price: 5.00, type: "food", hasCondiments: false, amount: 0});
+concessionList.push({name:"Pickle", price: 1.00, type: "food", hasCondiments: false, amount: 0});
+concessionList.push({name:"Super Pretzel", price: 3.00, type: "food", hasCondiments: false, amount: 0});
+concessionList.push({name:"Super Pretzel with Cheese", price: 3.50, type: "food", hasCondiments: false, amount: 0});
+//drinks
+concessionList.push({name:"Small Drink", price: 2.00, type: "drink", hasCondiments: false, amount: 0});
+concessionList.push({name:"Medium Drink", price: 3.00, type: "drink", hasCondiments: false, amount: 0});
+concessionList.push({name:"Large Drink", price: 4.00, type: "drink", hasCondiments: false, amount: 0});
+concessionList.push({name:"Dasani Bottled Water", price: 2.00, type: "drink", hasCondiments: false, amount: 0});
+concessionList.push({name:"Yoo-Hoo", price: 2.00, type: "drink", hasCondiments: false, amount: 0});
+concessionList.push({name:"Monster Energy", price: 3.00, type: "drink", hasCondiments: false, amount: 0});
+//candy
+concessionList.push({name:"Cotton Candy", price: 3.00, type: "candy", hasCondiments: false, amount: 0});
+concessionList.push({name:"Dippin' Dots", price: 3.50, type: "candy", hasCondiments: false, amount: 0});
+//popcorn
+concessionList.push({name:"Small Popcorn", price: 3.00, type: "popcorn", hasCondiments: false, amount: 0});
+concessionList.push({name:"Medium Popcorn", price: 4.00, type: "popcorn", hasCondiments: false, amount: 0});
+concessionList.push({name:"Large Popcorn", price: 5.00, type: "popcorn", hasCondiments: false, amount: 0});
+concessionList.push({name:"Jumbo Collectors Bucket Popcorn", price: 7.00, type: "popcorn", hasCondiments: false, amount: 0});
+
+
 app.use(express.static(__dirname + '/public'));
 app.enable('trust proxy');
 
@@ -76,12 +106,14 @@ app.put('/add_concession', function(req, res) {
   var price = item.price;
   var type = item.type;
   var hasCondiments = item.hasCondiments;
+  var itemsWithCondiments = [];
 
   concessionDict = {};
   concessionDict['name'] = name;
   concessionDict['price'] = price;
   concessionDict['type'] = type;
   concessionDict['hasCondiments'] = hasCondiments;
+  concessionDict['itemsWithCondiments'] = itemsWithCondiments;
 
   concessionList.push(concessionDict);
   res.end('{"status" : 200}');
@@ -97,7 +129,7 @@ app.put('/delete_concession', function(req, res) {
 
   var index = 0;
   for(var i = 0; i < concessionList.length; i++) {
-    if(concessionList[i].name == name && concessionList[i].price == price && concessionList[i].type == type && concessionList[i].hasCondiments == hasCondiments) {
+    if(concessionList[i].name == name && concessionList[i].price == price && concessionList[i].type == type) {
       break;
     }
     index++;

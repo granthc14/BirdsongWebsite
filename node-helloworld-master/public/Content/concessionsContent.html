@@ -4,8 +4,8 @@ table {
 }
 
 </style>
-<div class="w3-container" style="width: 100%; text-align: center; font-size: 22px; font-weight: bold; padding: 32px;">
-    Combo Meal: 1 Large Popcorn, 2 Large drinks only $12!
+<div class="w3-container" style="width: 100%; text-align: center; font-size: 22px; font-weight: bold; padding: 32px; background-color: #f1f1f1;">
+    <div style="background-color: #f1f1f1;">Combo Meal: 1 Large Popcorn, 2 Large drinks only $12!</div>
 </div>
 <div class="w3-container">
     <div class="w3-half">
@@ -70,11 +70,13 @@ table {
 
 $(document).ready(function() {
   //populate concession items from json string
-  $.getJSON("http://birdsong.mybluemix.net/get_concessions", function(data) {
+  $.getJSON("/get_concessions", function(data) {
     $.each(data, function(i, item) {
+      var price = parseFloat(item.price).toFixed(2);
+
       var $tr=$('<tr class=\'tableBody\'></tr>');
       $tr.append($('<td></td>',{text : item.name}));
-      $tr.append($('<td></td>',{text : '$'+item.price}));
+      $tr.append($('<td></td>',{text : '$'+price}));
       $tr.append($('<td></td>'));
       //append each item to the corresponding table (food, drinks, etc.)
       $('#'+item.type+'Half').find('tbody').append($tr);
