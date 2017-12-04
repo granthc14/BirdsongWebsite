@@ -8,6 +8,7 @@
     "http-post": "^0.1.1",
     "http-proxy": "^1.8.1",
     "imdb-api": "^3.1.1",
+    "json2csv": "^3.11.5",
     "nodemailer": "^4.4.0",
     "randomcolor": "^0.5.3",
     "request": "^2.83.0"
