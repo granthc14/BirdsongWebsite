@@ -98,6 +98,13 @@ app.get('/search_movie', function (req, res) {
 });
 
 app.get('/get_concessions', function(req, res) {
+  for(var i = 0; i < concessionList.length; i++) {
+    if (concessionList[i].hasCondiments) {
+      concessionList[i].itemsWithCondiments = [];
+    }
+    index++;
+  }
+
    res.send(JSON.stringify(concessionList));
 })
 
@@ -106,15 +113,15 @@ app.put('/add_concession', function(req, res) {
   var name = item.name;
   var price = item.price;
   var type = item.type;
+  var amount = 0;
   var hasCondiments = item.hasCondiments;
-  var itemsWithCondiments = [];
 
   concessionDict = {};
   concessionDict['name'] = name;
   concessionDict['price'] = price;
   concessionDict['type'] = type;
+  concessionDict['amount'] = amount;
   concessionDict['hasCondiments'] = hasCondiments;
-  concessionDict['itemsWithCondiments'] = itemsWithCondiments;
 
   concessionList.push(concessionDict);
   res.end('{"status" : 200}');
