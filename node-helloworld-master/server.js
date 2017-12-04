@@ -212,6 +212,8 @@ app.put('/order', function (req, res) {
     var displayNo;
     var isCompleted = false;
 
+    console.log("Extras: " + JSON.parse(extras)["email"]);
+
     orderNo = orderTime.getTime();
 
     orderDict = {};
@@ -242,7 +244,7 @@ app.put('/order', function (req, res) {
 
     var mailOptions = {
         from: 'birdsongorders@gmail.com',
-        to: email,
+        to: JSON.parse(extras)["email"].toString(),
         subject: 'Order received. Do not reply',
         text: 'Your order has been received and will be delivered to you shortly. \nThanks, and enjoy the show!'
     };
@@ -270,6 +272,8 @@ app.put('/order', function (req, res) {
 //change order status to complete once an order is done
 app.put('/complete_order', function(req, res) {
     item = JSON.parse(req.body);
+
+    console.log(item)
 
     if(item["email"] != null) {
         var transporter = nodemailer.createTransport({
