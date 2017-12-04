@@ -144,7 +144,7 @@ $(document).ready(function() {
     $.ajax({
       type: 'PUT',
       url: '/complete_order',
-      data: jsonObj,
+      data: JSON.stringify(jsonObj),
       success: function(data){
         console.log('success');
       },

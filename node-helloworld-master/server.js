@@ -253,7 +253,7 @@ app.put('/order', function (req, res) {
         from: 'birdsongorders@gmail.com',
         to: JSON.parse(extras)["email"].toString(),
         subject: 'Order received. Do not reply',
-        text: 'Your order has been received and will be delivered to you shortly. \nThanks, and enjoy the show!'
+        text: 'Your order has been received and will be delivered to you shortly.\nPlease do not close the app or go back from the number screen until you receive your food! \nThanks, and enjoy the show!'
     };
 
     transporter.sendMail(mailOptions, function(error, info){
@@ -295,8 +295,8 @@ app.put('/complete_order', function(req, res) {
         var mailOptions = {
             from: 'birdsongorders@gmail.com',
             to: item["email"],
-            subject: 'Order prepared. Do not reply',
-            text: 'Your order is on the way! \nThanks, and enjoy the show!'
+            subject: 'Your Order is being delivered!. Do not reply',
+            text: 'Your order is on the way!\nPlease place you phone open to the screen with your number on it on your dashboard. \nThanks, and enjoy the show!'
         };
 
         transporter.sendMail(mailOptions, function(error, info){
