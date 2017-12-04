@@ -1,5 +1,6 @@
 var express = require("express"),
     app = express();
+var nodemailer = require('nodemailer');
 app.use (function(req, res, next) {
     var data='';
     req.setEncoding('utf8');
@@ -94,7 +95,7 @@ app.get('/search_movie', function (req, res) {
     request(url, function(error, response, body) {
         res.send(body);
     });
-})
+});
 
 app.get('/get_concessions', function(req, res) {
    res.send(JSON.stringify(concessionList));
@@ -195,6 +196,7 @@ app.put('/order', function (req, res) {
     var carMake = req.query.carMake;
     var carModel = req.query.carModel;
     var carColor = req.query.carColor;
+    var email = req.query.email;
     var orderTime = new Date();
     var cashOrCard = req.query.cashOrCard;
     var orderItems = req.query.orderItems;
@@ -214,12 +216,38 @@ app.put('/order', function (req, res) {
     orderDict['orderTime'] = orderTime;
     orderDict['cashOrCard'] = cashOrCard;
     orderDict['extras'] = extras;
+    orderDict['email'] = email;
     orderDict['orderItems'] = orderItems;
     orderDict['cost'] = cost;
     orderDict['displayNo'] =  orderNo.toString().substr(orderNo.toString().length - 4);;
     orderDict['isCompleted'] = isCompleted;
 
     orders.push(orderDict);
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'birdsongOrders@gmail.com',
+            pass: 'Birdsong2017'
+        }
+    });
+
+
+    var mailOptions = {
+        from: 'birdsongorders@gmail.com',
+        to: email,
+        subject: 'Order received. Do not reply',
+        text: 'Your order has been received and will be delivered to you shortly. \nThanks, and enjoy the show!'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+
 
 
     returnDict = {};
@@ -235,6 +263,32 @@ app.put('/order', function (req, res) {
 //change order status to complete once an order is done
 app.put('/complete_order', function(req, res) {
     item = JSON.parse(req.body);
+
+    if(item.email != null) {
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'birdsongOrders@gmail.com',
+                pass: 'Birdsong2017'
+            }
+        });
+
+
+        var mailOptions = {
+            from: 'birdsongorders@gmail.com',
+            to: item.email,
+            subject: 'Order prepared. Do not reply',
+            text: 'Your order is on the way! \nThanks, and enjoy the show!'
+        };
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+    }
 
     var orderNo = item.orderNo;
     for(i = 0; i < orders.length; i++) {
