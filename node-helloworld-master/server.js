@@ -98,13 +98,6 @@ app.get('/search_movie', function (req, res) {
 });
 
 app.get('/get_concessions', function(req, res) {
-  for(var i = 0; i < concessionList.length; i++) {
-    if (concessionList[i].hasCondiments) {
-      concessionList[i].itemsWithCondiments = [];
-    }
-    index++;
-  }
-
    res.send(JSON.stringify(concessionList));
 })
 
