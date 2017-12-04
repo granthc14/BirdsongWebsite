@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 
+<style>
+    th {
+        padding:2.5%;
+    }
+    td {
+        padding:2.5%;
+    }
+</style>
+
 <div align="center">
 
         Search for movie with name <input type="text" id="movieName"><br>
         <button onclick="searchMovie()" name="searchMovieButton">Search</button>
 </div>
 
-<div id="movieResponse">
+<div align="center">
+    <table id="movieResponse"></table>
 </div>
-
-
 
 <script>
     function searchMovie() {
         var movieName = document.getElementById("movieName").value;
         var percentEncodedMovieName = encodeURIComponent(movieName);
-        debugger;
 
         var theMovieDatabaseAPIKey = "86bd3a87e020e36bcbe442507b2c35c3";
         var url = "https://api.themoviedb.org/3/search/movie?api_key="
@@ -27,18 +34,45 @@
         xmlHttp.open("GET", url, false);
         xmlHttp.send(null);
         var response = xmlHttp.responseText;
-        debugger;
+
         var jsonResponse = JSON.parse(response);
         var results = jsonResponse["results"];
-        debugger;
 
+        var sOneMOneHTML = "<td> <button id='sOneMOne'>Select</button></td>"
+        var sOneMTwoHTML = "<td> <button id='sOneMTwo'>Select</button></td>"
+        var sTwoMOneHTML = "<td> <button id='sTwoMOne'>Select</button></td>"
+        var sTwoMTwoHTML = "<td> <button id='sTwoMTwo'>Select</button></td>"
+        var comingSoon = "<td> <button id='ComingSoonButton'>Select</button></td>"
 
+        var htmlString = "<tr>" +
+            "<th>Movie Name</th>" +
+            "<th>Screen One Movie One</th>" +
+            "<th>Screen One Movie Two</th>" +
+            "<th>Screen Two Movie One</th>" +
+            "<th>Screen Two Movie Two</th>" +
+            "<th>Coming Soon</th>" +
+            "</tr>";
 
+        results.forEach(function(element) {
+            htmlString += "<tr>" + "<td>" + element["title"] + "</td>" + sOneMOneHTML + sOneMTwoHTML + sTwoMOneHTML + sTwoMTwoHTML + comingSoon + "</tr>";
+        });
 
+        $(document).on("click", "#ComingSoonButton", function(){
+            console.log("Coming Soon")
+        });
+        $(document).on("click", "#sOneMOne", function(){
+            console.log("Coming Soon")
+        });
+        $(document).on("click", "#sOneMTwo", function(){
+            console.log("Coming Soon")
+        });
+        $(document).on("click", "#sTwoMOne", function(){
+            console.log("Coming Soon")
+        });
+        $(document).on("click", "#sTwoMTwo", function(){
+            console.log("Leaving Soon")
+        });
 
-
-        document.getElementById("movieResponse").innerHTML = response;
-    }
-
-
+        document.getElementById("movieResponse").innerHTML = htmlString;
+    };
 </script>
