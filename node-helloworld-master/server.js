@@ -271,7 +271,7 @@ app.put('/order', function (req, res) {
 app.put('/complete_order', function(req, res) {
     item = JSON.parse(req.body);
 
-    if(item.email != null) {
+    if(item["email"] != null) {
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -283,7 +283,7 @@ app.put('/complete_order', function(req, res) {
 
         var mailOptions = {
             from: 'birdsongorders@gmail.com',
-            to: item.email,
+            to: item["email"],
             subject: 'Order prepared. Do not reply',
             text: 'Your order is on the way! \nThanks, and enjoy the show!'
         };
