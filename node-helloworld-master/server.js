@@ -25,8 +25,8 @@ var concessionList = [];
 
 //default concession items in case the app crashes since there is no db
 //food
-concessionList.push({name:"Hamburger", price: 3.50, type: "food", hasCondiments: true, amount: 0});
-concessionList.push({name:"Cheeseburger", price: 4.00, type: "food", hasCondiments: true, amount: 0});
+concessionList.push({name:"Hamburger", price: 3.50, type: "food", hasCondiments: true, amount: 0, itemsWithCondiments = []});
+concessionList.push({name:"Cheeseburger", price: 4.00, type: "food", hasCondiments: true, amount: 0, itemsWithCondiments = []});
 concessionList.push({name:"Hot Dog", price: 3.00, type: "food", hasCondiments: false, amount: 0});
 concessionList.push({name:"Cheese Dog", price: 3.50, type: "food", hasCondiments: false, amount: 0});
 concessionList.push({name:"Chili-Cheese Dog", price: 4.00, type: "food", hasCondiments: false, amount: 0});
@@ -37,9 +37,9 @@ concessionList.push({name:"Pickle", price: 1.00, type: "food", hasCondiments: fa
 concessionList.push({name:"Super Pretzel", price: 3.00, type: "food", hasCondiments: false, amount: 0});
 concessionList.push({name:"Super Pretzel with Cheese", price: 3.50, type: "food", hasCondiments: false, amount: 0});
 //drinks
-concessionList.push({name:"Small Drink", price: 2.00, type: "drink", hasCondiments: false, amount: 0});
-concessionList.push({name:"Medium Drink", price: 3.00, type: "drink", hasCondiments: false, amount: 0});
-concessionList.push({name:"Large Drink", price: 4.00, type: "drink", hasCondiments: false, amount: 0});
+concessionList.push({name:"Small Drink", price: 2.00, type: "drink", hasCondiments: true, amount: 0, itemsWithCondiments = []});
+concessionList.push({name:"Medium Drink", price: 3.00, type: "drink", hasCondiments: true, amount: 0, itemsWithCondiments = []});
+concessionList.push({name:"Large Drink", price: 4.00, type: "drink", hasCondiments: true, amount: 0, itemsWithCondiments = []});
 concessionList.push({name:"Dasani Bottled Water", price: 2.00, type: "drink", hasCondiments: false, amount: 0});
 concessionList.push({name:"Yoo-Hoo", price: 2.00, type: "drink", hasCondiments: false, amount: 0});
 concessionList.push({name:"Monster Energy", price: 3.00, type: "drink", hasCondiments: false, amount: 0});
@@ -98,13 +98,6 @@ app.get('/search_movie', function (req, res) {
 });
 
 app.get('/get_concessions', function(req, res) {
-  for(var i = 0; i < concessionList.length; i++) {
-    if (concessionList[i].hasCondiments) {
-      concessionList[i].itemsWithCondiments = [];
-    }
-    index++;
-  }
-
    res.send(JSON.stringify(concessionList));
 })
 
