@@ -16,6 +16,19 @@
       margin-right: 16px!important;
     }
 
+    .comboAdd {
+      color: white!important;
+      margin-right: 16px!important;
+    }
+    .comboAdd:hover {
+        color: white!important;
+        margin-right: 16px!important;
+      }
+    .comboAdd:focus {
+        color: white!important;
+        margin-right: 16px!important;
+      }
+
   .remove {
     color: #f44336!important;
     float: right;
@@ -112,11 +125,11 @@
             </table>
         </div>
     </div>
-    <div class="w3-half">
+    <!-- <div class="w3-half">
         <div class="w3-card-4 w3-margin" id="combosHalf">
             <header class="w3-container w3-blue">
               <h1>Combos
-                <a href="#"><span class="add glyphicon glyphicon-plus" onclick="document.getElementById('combosModal').style.display='block'">
+                <a href="#"><span class="comboAdd glyphicon glyphicon-plus" onclick="document.getElementById('combosModal').style.display='block'">
                 </span></a>
               </h1>
             </header>
@@ -127,11 +140,11 @@
                     <th>Price</th>
                     <th>&nbsp;</th>
                 </tr>
-                <!-- combos populates here -->
+                 combos populates here
               </tbody>
             </table>
         </div>
-    </div>
+    </div> -->
 </div>
 
 <!-- modal for adding food/drink/etc. -->
@@ -201,9 +214,12 @@
         </div>
 
         <div class="w3-third">
-          <label class="w3-text-gray">Amount</label>
+          <label class="w3-text-gray">Item Amount</label>
           <input class="comboInput w3-input w3-border" id="comboAmount" type="number" required></input>
         </div>
+      </div>
+      <div style="text-align: right;">
+        <a href="#">Add Another Item</a>
       </div>
       <br><br>
 
@@ -257,7 +273,7 @@ function loadConcessions() {
       $('#'+item.type+'Half').find('tbody').append($tr);
 
       //add items to dropdown for combos
-      $('#comboDropdown').append('<option value="'+i+'">'+item.name+' - $'+price+'</option>');
+      // $('#comboDropdown').append('<option value="'+i+'">'+item.name+' - $'+price+'</option>');
 
     });
   });
@@ -309,32 +325,32 @@ $(document).ready(function() {
     })
   });
 
-  $('#comboSubmitBtn').on('click', function() {
-    var name = $('#comboName').val();
-    var price = $('#comboPrice').val();
-    var jsonObj = {
-      name: name,
-      price: price,
-      type: "combo"
-    }
-
-    $.ajax({
-      type: 'PUT',
-      url: '/add_concession/',
-      dataType: 'JSON',
-      contentType: "application/json; charset=utf-8",
-      data: JSON.stringify(jsonObj),
-      success: function(data) {
-        // $('#concessionModal').hide();
-        location.reload();
-        loadConcessions();
-      },
-      error: function(data) {
-        $('#concessionModal').hide();
-        $('#failModal').show();
-      }
-    })
-  });
+  // $('#comboSubmitBtn').on('click', function() {
+  //   var name = $('#comboName').val();
+  //   var price = $('#comboPrice').val();
+  //   var jsonObj = {
+  //     name: name,
+  //     price: price,
+  //     type: "combo"
+  //   }
+  //
+  //   $.ajax({
+  //     type: 'PUT',
+  //     url: '/add_concession/',
+  //     dataType: 'JSON',
+  //     contentType: "application/json; charset=utf-8",
+  //     data: JSON.stringify(jsonObj),
+  //     success: function(data) {
+  //       // $('#concessionModal').hide();
+  //       location.reload();
+  //       loadConcessions();
+  //     },
+  //     error: function(data) {
+  //       $('#concessionModal').hide();
+  //       $('#failModal').show();
+  //     }
+  //   })
+  // });
 
   //delete concession items
   $(document).on('click', '.deleteBtn', function() {
