@@ -49,6 +49,7 @@ $(document).ready(function() {
       if (item.isCompleted == false) {
         var extras = JSON.parse(item.extras);
         var time = item.orderTime;
+        var cost = parseFloat(item.cost).toFixed(2);
 
         time = time.split('T')[1];
         time = time.split(":");
@@ -74,7 +75,7 @@ $(document).ready(function() {
         $tr.append($('<td></td>',{text : item.displayNo}));
         $tr.append($('<td></td>',{text : time}));
         $tr.append($('<td></td>',{text : item.cashOrCard}));
-        $tr.append($('<td></td>',{text : '$'+item.cost}));
+        $tr.append($('<td></td>',{text : '$'+cost}));
         $tr.append($('<td style="text-align: center;"><a class="checkmark" href="#" id="'+item.orderNo+'" data-email="'+extras.email+'"><span class="glyphicon glyphicon-ok"></span></a></td>'))
         $tr.append($('<td></td>'));
         $('#content').find('tbody').append($tr);
@@ -94,6 +95,7 @@ $(document).ready(function() {
               if (item.isCompleted == false) {
                 var extras = JSON.parse(item.extras);
                 var time = item.orderTime;
+                var cost = parseFloat(item.cost).toFixed(2);
 
                 time = time.split('T')[1];
                 time = time.split(":");
@@ -119,7 +121,7 @@ $(document).ready(function() {
                 $tr.append($('<td></td>',{text : item.displayNo}));
                 $tr.append($('<td></td>',{text : time}));
                 $tr.append($('<td></td>',{text : item.cashOrCard}));
-                $tr.append($('<td></td>',{text : '$'+item.cost}));
+                $tr.append($('<td></td>',{text : '$'+cost}));
                 $tr.append($('<td style="text-align: center;"><a class="checkmark" href="#" id="'+item.orderNo+'" data-email="'+extras.email+'"><span class="glyphicon glyphicon-ok"></span></a></td>'))
                 $('#content').find('tbody').append($tr);
                 }
