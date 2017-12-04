@@ -47,6 +47,12 @@
             </header>
             <table class="w3-table w3-striped w3-padding-32">
               <tbody>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Has Condiments</th>
+                    <th>&nbsp;</th>
+                </tr>
                 <!-- food populates here -->
               </tbody>
             </table>
@@ -92,22 +98,6 @@
         </div>
     </div>
 </div>
-<br>
-<div class="w3-container">
-    <div class="w3-half">
-        <div class="w3-card-4 w3-margin" id="condimentsHalf">
-            <header class="w3-container w3-blue">
-              <h1>Condiments</h1>
-            </header>
-            <table class="w3-table w3-striped w3-padding-32">
-              <tbody>
-                <!-- condiments populate here -->
-              </tbody>
-            </table>
-        </div>
-    </div>
-    </div>
-</div>
 
 <!-- modal for adding food/drink/etc. -->
 <div id="concessionModal" class="w3-modal">
@@ -136,9 +126,13 @@
         <option value="drink">Drink</option>
         <option value="popcorn">Popcorn</option>
         <option value="candy">Candy</option>
-        <option value="condiments">Condiments</option>
       </select>
       <br><br>
+
+
+      <input class="w3-check" id="condiments" type="checkbox" style="width: 15px; height: 15px; top: 3px;">
+      <label class="w3-text-gray">Has Condiments (lettuce, tomatoes, onions, pickles)</label><br>
+      <br>
 
       <button class="w3-button w3-green" id="submitBtn">Submit</button><br><br>
     </div>
@@ -168,10 +162,16 @@
 function loadConcessions() {
   $.getJSON("/get_concessions", function(data) {
     $.each(data, function(i, item) {
+      var condiments = "No";
+      if (item.hasCondiments === true) {
+        condiments = "Yes";
+      }
+
       var $tr=$('<tr class=\'tableBody\'></tr>');
       $tr.append($('<td></td>',{text : item.name}));
       $tr.append($('<td></td>',{text : '$'+item.price}));
-      $tr.append($('<td><a href="#" class="deleteBtn" data-name="'+item.name+'" data-price="'+item.price+'" data-type="'+item.type+'">'
+      $tr.append($('<td></td>',{text : condiments}));
+      $tr.append($('<td><a href="#" class="deleteBtn" data-name="'+item.name+'" data-price="'+item.price+'" data-type="'+item.type+'" data-hasCondiments="'+item.hasCondiments+'">'
         +'<span class="remove glyphicon glyphicon-remove"></span></a></td>'));
       //append each item to the corresponding table (food, drinks, etc.)
       $('#'+item.type+'Half').find('tbody').append($tr);
@@ -199,10 +199,13 @@ $(document).ready(function() {
     var name = $('#name').val();
     var price = $('#price').val();
     var type = $('#concessionType').find(":selected").val();
+    var hasCondiments = $('#condiments').is(':checked');
+    console.log(hasCondiments);
     var jsonObj = {
       name: name,
       price: price,
-      type: type
+      type: type,
+      hasCondiments: hasCondiments
     }
 
     $.ajax({
@@ -229,10 +232,12 @@ $(document).ready(function() {
     var name = self.data("name");
     var price = self.data("price");
     var type = self.data("type");
+    var hasCondiments = self.data("hasCondiments");
     var jsonObj = {
       name: name,
       price: price,
-      type: type
+      type: type,
+      hasCondiments: hasCondiments
     }
 
     $.ajax({

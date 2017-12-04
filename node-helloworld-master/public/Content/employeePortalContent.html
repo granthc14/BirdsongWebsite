@@ -119,7 +119,7 @@ $(document).ready(function() {
                 $tr.append($('<td></td>',{text : item.displayNo}));
                 $tr.append($('<td></td>',{text : time}));
                 $tr.append($('<td></td>',{text : item.cashOrCard}));
-                $tr.append($('<td></td>',{text : item.totalCost}));
+                $tr.append($('<td></td>',{text : '$'+item.cost}));
                 $tr.append($('<td style="text-align: center;"><a class="checkmark" href="#" id="'+item.orderNo+'"><span class="glyphicon glyphicon-ok"></span></a></td>'))
                 $('#content').find('tbody').append($tr);
                 }
