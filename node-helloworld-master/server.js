@@ -145,7 +145,6 @@ app.put('/delete_concession', function(req, res) {
   var name = item.name;
   var price = item.price;
   var type = item.type;
-  var hasCondiments = item.hasCondiments;
 
   var index = 0;
   for(var i = 0; i < concessionList.length; i++) {
