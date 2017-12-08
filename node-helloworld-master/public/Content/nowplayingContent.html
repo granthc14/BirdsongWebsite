@@ -1,87 +1,130 @@
-<div class="w3-container">
-    <div class="w3-half" style="text-align: center">
-        <div style="font-size: 28px; padding-top:35px; padding-left:35px; padding-right:35px"> Screen One
-            <hr style="border-color:grey; width: 95%; margin-left: 2.5%;">
-        </div>
-        <div class="w3-half">
-            <div style="font-size: 20px;">7:30 PM</div>
-            <br>
-            <a href="http://www.imdb.com/title/tt1396484/?ref_=fn_al_tt_1">
-            <img id="guideImage" src="https://images-na.ssl-images-amazon.com/images/M/MV5BOTE0NWEyNDYtYWI5MC00MWY0LTg1NDctZjAwMjkyMWJiNzk1XkEyXkFqcGdeQXVyNjk5NDA3OTk@._V1_SY1000_CR0,0,674,1000_AL_.jpg" style="max-width:96%; max-height:96%;" />
-            </a>
-            <br>
-            <br>
-        </div>
-        <div class="w3-half">
-            <div style="font-size: 20px;">9:50 PM</div>
-            <br>
-            <a href="http://www.imdb.com/title/tt1648190/?ref_=nv_sr_1">
-            <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTU3MjUwMzQ3MF5BMl5BanBnXkFtZTgwMjcwNjkxMjI@._V1_SY1000_CR0,0,674,1000_AL_.jpg" style="max-width:96%;max-height:96%;" />
-            </a>
-        </div>
-    </div>
-    <div class="w3-half" style="text-align: center">
-        <div style="font-size: 28px; padding-top:35px; padding-left:35px; padding-right:35px"> Screen Two
-            <hr style="border-color:grey; width: 95%; margin-left: 2.5%;">
-        </div>
-        <div class="w3-half">
-            <div style="font-size: 20px;">7:30 PM</div>
-            <br>
-            <a href="http://www.imdb.com/title/tt3486626/?ref_=fn_al_tt_1">
-            <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BZTA5ZDZhMjgtNjNkOC00MzM0LWFlZmItZTM4MjJkMGEyZGQwXkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_SY1000_CR0,0,673,1000_AL_.jpg" style="max-width:96%; max-height:96%;" />
-            </a>
-            <br>
-            <br>
-        </div>
-        <div class="w3-half">
-            <div style="font-size: 20px;">9:50 PM</div>
-            <br>
-            <a href="http://www.imdb.com/title/tt3890160/?ref_=nv_sr_1">
-            <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjM3MjQ1MzkxNl5BMl5BanBnXkFtZTgwODk1ODgyMjI@._V1_SY1000_CR0,0,674,1000_AL_.jpg" style="max-width:96%; max-height:96%;" />
-            </a>
-        </div>
-    </div>
-    <br>
-    <div class="w3-container" style="text-align: center">
-        <div style="font-size: 28px; padding-top:35px; padding-left:35px; padding-right:35px"> Coming Soon
-            <hr style="border-color:grey; width: 100%; margin-left: 2.5%;">
-        </div>
-        <div style="font-size: 20px;">September 22</div>
-        <br>
-        <a href="http://www.imdb.com/title/tt3014284/?ref_=nv_sr_1">
-            <img id="fixImage" src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTYxNjIxNzM5Nl5BMl5BanBnXkFtZTgwMzg5NzY2MjI@._V1_SY1000_CR0,0,674,1000_AL_.jpg" style="max-width:100%; max-height:100%;" />
-            </a>
-        <br>
-        <br>
-    </div>
+<div id="content" class="w3-container">
+
 </div>
 <script>
 // Set the size of the image on the second row to the size of the others
 
 $(document).ready(function() {
-    debugger;
-    movies = {}
-
     $.ajax({
         type: 'GET',
         url: '/get_movies',
         success: function(data){
-            movies = data;
+
+            debugger;
+            var movies = JSON.parse(data);
+            var screenOne = movies["screenOne"];
+            var screenTwo = movies["screenTwo"];
+            var cs = movies["comingSoon"];
+            var s1m1 = screenOne["movieOne"];
+            var s1m2 = screenOne["movieTwo"];
+            var s2m1 = screenTwo["movieOne"];
+            var s2m2 = screenTwo["movieTwo"];
+
+
+//            $('m1S1Start').innerHTML = s1m1["startTime"];
+//            $('m1S1Link').attr('href',s1m1["imdbLink"]);
+//            $('guideImage').attr('src', s1m1["imgPath"]);
+//
+//            $('m2S1StartTime').innerHTML = s1m2["startTime"];
+//            $('m2S1Link').attr('href',s1m2["imdbLink"]);
+//            $('m2S1Img').attr('src', s1m2["imgPath"]);
+//
+//            $('S2M1Time').innerHTML = s2m1["startTime"];
+//            $('S2M1Link').attr('href',s2m1["imdbLink"]);
+//            $('S2M1Img').attr('src', s2m1["imgPath"]);
+//
+//            $('S2M2Time').innerHTML = s2m2["startTime"];
+//            $('S2M2Link').attr('href',s2m2["imdbLink"]);
+//            $('S2M2Img').attr('src', s2m2["imgPath"]);
+
+
+            if (cs != null) {
+                if (cs["startTime"] != null) {
+                    $('CSTime').innerHTML = cs["startTime"];
+                }
+
+                if (cs["imdbLink"] != null) {
+                    $('CSLink').attr('href',cs["imdbLink"]);
+                }
+
+                if (cs["imgPath"]!= null) {
+                    $('fixImage').attr('src', cs["imgPath"]);
+                }
+            }
+
+
+
+
+            var content = " <div class=\"w3-half\" style=\"text-align: center\">\n" +
+                "        <div style=\"font-size: 28px; padding-top:35px; padding-left:35px; padding-right:35px\"> Screen One\n" +
+                "            <hr style=\"border-color:grey; width: 95%; margin-left: 2.5%;\">\n" +
+                "        </div>\n" +
+                "        <div class=\"w3-half\">\n" +
+                "            <div id=\"m1S1Start\" style=\"font-size: 20px;\">"+ s1m1["startTime"] +"</div>\n" +
+                "            <br>\n" +
+                "            <a id=\"m1S1Link\" href=\""+ s1m1["imdbLink"]+"\">\n" +
+                "            <img id=\"guideImage\" src=\""+ s1m1["imgPath"] +"\" style=\"max-width:96%; max-height:96%;\" />\n" +
+                "            </a>\n" +
+                "            <br>\n" +
+                "            <br>\n" +
+                "        </div>\n" +
+                "        <div class=\"w3-half\">\n" +
+                "            <div id=\"m2S1StartTime\" style=\"font-size: 20px;\">9:50 PM</div>\n" +
+                "            <br>\n" +
+                "            <a id=\"m2S1Link\" href=\"http://www.imdb.com/title/tt1648190/?ref_=nv_sr_1\">\n" +
+                "            <img id=\"m2S1Img\" src=\"https://images-na.ssl-images-amazon.com/images/M/MV5BMTU3MjUwMzQ3MF5BMl5BanBnXkFtZTgwMjcwNjkxMjI@._V1_SY1000_CR0,0,674,1000_AL_.jpg\" style=\"max-width:96%;max-height:96%;\" />\n" +
+                "            </a>\n" +
+                "        </div>\n" +
+                "    </div>\n" +
+                "    <div class=\"w3-half\" style=\"text-align: center\">\n" +
+                "        <div style=\"font-size: 28px; padding-top:35px; padding-left:35px; padding-right:35px\"> Screen Two\n" +
+                "            <hr style=\"border-color:grey; width: 95%; margin-left: 2.5%;\">\n" +
+                "        </div>\n" +
+                "        <div class=\"w3-half\">\n" +
+                "            <div id=\"S2M1Time\" style=\"font-size: 20px;\">7:30 PM</div>\n" +
+                "            <br>\n" +
+                "            <a id=\"S2M1Link\" href=\"http://www.imdb.com/title/tt3486626/?ref_=fn_al_tt_1\">\n" +
+                "            <img id=\"S2M1Img\" src=\"https://images-na.ssl-images-amazon.com/images/M/MV5BZTA5ZDZhMjgtNjNkOC00MzM0LWFlZmItZTM4MjJkMGEyZGQwXkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_SY1000_CR0,0,673,1000_AL_.jpg\" style=\"max-width:96%; max-height:96%;\" />\n" +
+                "            </a>\n" +
+                "            <br>\n" +
+                "            <br>\n" +
+                "        </div>\n" +
+                "        <div class=\"w3-half\">\n" +
+                "            <div id=\"S2M2Time\" style=\"font-size: 20px;\">9:50 PM</div>\n" +
+                "            <br>\n" +
+                "            <a id=\"S2M2Link\" href=\"http://www.imdb.com/title/tt3890160/?ref_=nv_sr_1\">\n" +
+                "            <img id=\"S2M2Img\" src=\"https://images-na.ssl-images-amazon.com/images/M/MV5BMjM3MjQ1MzkxNl5BMl5BanBnXkFtZTgwODk1ODgyMjI@._V1_SY1000_CR0,0,674,1000_AL_.jpg\" style=\"max-width:96%; max-height:96%;\" />\n" +
+                "            </a>\n" +
+                "        </div>\n" +
+                "    </div>\n" +
+                "    <br>\n" +
+                "    <div class=\"w3-container\" style=\"text-align: center\">\n" +
+                "        <div style=\"font-size: 28px; padding-top:35px; padding-left:35px; padding-right:35px\"> Coming Soon\n" +
+                "            <hr style=\"border-color:grey; width: 100%; margin-left: 2.5%;\">\n" +
+                "        </div>\n" +
+                "        <div id=\"CSTime\" style=\"font-size: 20px;\">" + cs["startTime"] + "</div>\n" +
+                "        <br>\n" +
+                "        <a id=\"CSLink\" href=\" " + cs["imdbLink"] + "\">\n" +
+                "            <img id=\"fixImage\" src=\"" + cs["imgPath"] + "\" style=\"max-width:100%; max-height:100%;\" />\n" +
+                "            </a>\n" +
+                "        <br>\n" +
+                "        <br>\n" +
+                "    </div>";
+
+
+            $("#content").html(content);
+
+            $('#fixImage').height($('#guideImage').height());
+            $('#fixImage').width($('#guideImage').width());
+
             console.log('success');
         },
         error: function(data) {
             console.log('error');
         }
     });
+
 });
-
-
-
-
-
-
-
-
 
 
 window.onresize = function resize() {

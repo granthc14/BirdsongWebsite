@@ -201,20 +201,22 @@ app.get('/get_movies', function(req, res) {
     screen2['movieOne'] = sTwoMovieOne;
     screen2['movieTwo'] = sTwoMovieTwo;
 
+    var CS = {};
+    CS['name'] = "Baby Driver";
+    CS['rating'] = "R";
+    CS['startTime'] = "9:50 PM";
+    CS['imgPath'] = baseUrl + "/dN9LbVNNZFITwfaRjl4tmwGWkRg.jpg";
+
+
 
 
     if (movieOneScreenOne != null) {
-        screen1['movieOne'] = movieOneScreenOne;
+        sOneMovieOne = movieOneScreenOne;
+        sOneMovieOne['imgPath'] = baseUrl + movieOneScreenOne["imgPath"];
+        screen1['movieOne'] = sOneMovieOne;
     }
     if (movieTwoScreenOne != null) {
-        var sOneMovieTwo = {};
-        sOneMovieTwo['name'] = movieTwoScreenOne['name'];
-        sOneMovieTwo['rating'] = movieTwoScreenOne['rating'];
-        sOneMovieTwo['startTime'] = movieTwoScreenOne['startTime'];
-        sOneMovieTwo['imgPath'] = baseUrl + movieTwoScreenOne['imgPath'];
-
-        screen1['movieTwo'] = sOneMovieTwo;
-
+        screen1['movieTwo'] = movieTwoScreenOne;
     }
     if (movieOneScreenTwo != null) {
         screen2['movieOne'] = movieOneScreenTwo;
@@ -223,13 +225,17 @@ app.get('/get_movies', function(req, res) {
         screen2['movieTwo'] = movieTwoScreenTwo;
     }
     if (comingSoonDict != null) {
-        movies['comingSoon'] = comingSoonDict;
+        CS['name'] = comingSoonDict['name'];
+        CS['rating'] = comingSoonDict['rating'];
+        CS['startTime'] = comingSoonDict['startTime'];
+        CS['imdbLink'] = comingSoonDict['imdbLink'];
+        CS['imgPath'] = baseUrl + comingSoonDict['imgPath'];
     }
 
 
     movies['screenOne'] = screen1;
     movies['screenTwo'] = screen2;
-    movies['comingSoon'] = comingSoonDict;
+    movies['comingSoon'] = CS;
 
     res.send(JSON.stringify(movies));
 })
@@ -249,13 +255,10 @@ app.put('/set_movies', function (req, res) {
        movieTwoScreenTwo = movieDict;
    }
    else if (movieDict['screen'] == "Coming Soon") {
-       comingSoonDict = moviedict;
+       comingSoonDict = movieDict;
    }
-
-
-
     res.send("It's working, I just have to format it now. -Grant");
-})
+});
 
 app.put('/order', function (req, res) {
     var screenNo = req.query.screenNo;
