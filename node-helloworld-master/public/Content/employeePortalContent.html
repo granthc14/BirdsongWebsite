@@ -54,6 +54,14 @@ $(document).ready(function() {
         time = time.split('T')[1];
         time = time.split(":");
         amPm = "AM";
+        //since time is gmt by default, which is 6 hours ahead of cst
+        if (time[0] > 6) {
+          time[0] = time[0] - 6;
+        }
+        else {
+          time[0] = time[0] + 6;
+        }
+
         if (time[0] > 12) {
           time[0] = time[0] - 12;
           amPm = "PM";
