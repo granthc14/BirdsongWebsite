@@ -54,11 +54,21 @@ $(document).ready(function() {
         time = time.split('T')[1];
         time = time.split(":");
         amPm = "AM";
-        if (time[0] > 12) {
-          time[0] = time[0] - 12;
+        hours = time[0];
+        minutes = time[1];
+        //since time is gmt by default, which is 6 hours ahead of cst
+        if (hours > 6) {
+          hours = hours - 6;
+        }
+        else {
+          hours = hours + 6;
+        }
+
+        if (hours > 12) {
+          hours = hours - 12;
           amPm = "PM";
         }
-        time = time[0] + ":" + time[1] + " " + amPm;
+        time = hours + ":" + minutes + " " + amPm;
 
         var $tr=$('<tr class=\'tableBody\'></tr>');
         $tr.append($('<td><a target="_blank" href=\'orderDetails.html?orderNo='+item.orderNo+'\'>'+item.orderNo+'</a></td>'));

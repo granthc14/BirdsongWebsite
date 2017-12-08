@@ -114,21 +114,23 @@ app.put('/add_concession', function(req, res) {
   item = JSON.parse(req.body);
 
   var name = item.name;
-  var price = item.price;
   var type = item.type;
+  var price = item.price;
   concessionDict = {};
   concessionDict['name'] = name;
-  concessionDict['price'] = price;
   concessionDict['type'] = type;
+  concessionDict['price'] = price;
 
   if (type == "combo") {
     var totalItems = item.totalItems;
     var itemCount = item.itemCount;
-    // var discount = item.discount;
+    var discount = item.discount;
+    var items = item.items;
 
     concessionDict['totalItems'] = totalItems;
     concessionDict['itemCount'] = itemCount;
     concessionDict['discount'] = discount;
+    concessionDict['items'] = items;
   }
 
   else {
@@ -149,7 +151,6 @@ app.put('/delete_concession', function(req, res) {
   var name = item.name;
   var price = item.price;
   var type = item.type;
-  var hasCondiments = item.hasCondiments;
 
   var index = 0;
   for(var i = 0; i < concessionList.length; i++) {
