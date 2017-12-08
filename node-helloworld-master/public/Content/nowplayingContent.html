@@ -58,6 +58,32 @@
 <script>
 // Set the size of the image on the second row to the size of the others
 
+$(document).ready(function() {
+    debugger;
+    movies = {}
+
+    $.ajax({
+        type: 'GET',
+        url: '/get_movies',
+        success: function(data){
+            movies = data;
+            console.log('success');
+        },
+        error: function(data) {
+            console.log('error');
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+
 window.onresize = function resize() {
     $('#fixImage').height($('#guideImage').height());
     $('#fixImage').width($('#guideImage').width());

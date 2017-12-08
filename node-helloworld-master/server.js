@@ -26,6 +26,12 @@ var fileSize = "";
 var orders = [];
 var concessionList = [];
 
+var movieOneScreenOne = null;
+var movieTwoScreenOne = null;
+var movieOneScreenTwo = null;
+var movieTwoScreenTwo = null;
+var comingSoonDict = null;
+
 //default concession items in case the app crashes since there is no db
 //food
 concessionList.push({name:"Hamburger", price: 3.50, type: "food", hasCondiments: true, amount: 0, itemsWithCondiments: []});
@@ -195,19 +201,63 @@ app.get('/get_movies', function(req, res) {
     screen2['movieOne'] = sTwoMovieOne;
     screen2['movieTwo'] = sTwoMovieTwo;
 
+
+
+    if (movieOneScreenOne != null) {
+        screen1['movieOne'] = movieOneScreenOne;
+    }
+    if (movieTwoScreenOne != null) {
+        var sOneMovieTwo = {};
+        sOneMovieTwo['name'] = movieTwoScreenOne['name'];
+        sOneMovieTwo['rating'] = movieTwoScreenOne['rating'];
+        sOneMovieTwo['startTime'] = movieTwoScreenOne['startTime'];
+        sOneMovieTwo['imgPath'] = baseUrl + movieTwoScreenOne['imgPath'];
+
+        screen1['movieTwo'] = sOneMovieTwo;
+
+    }
+    if (movieOneScreenTwo != null) {
+        screen2['movieOne'] = movieOneScreenTwo;
+    }
+    if (movieTwoScreenTwo != null) {
+        screen2['movieTwo'] = movieTwoScreenTwo;
+    }
+    if (comingSoonDict != null) {
+        movies['comingSoon'] = comingSoonDict;
+    }
+
+
     movies['screenOne'] = screen1;
     movies['screenTwo'] = screen2;
+    movies['comingSoon'] = comingSoonDict;
+
     res.send(JSON.stringify(movies));
 })
 
 app.put('/set_movies', function (req, res) {
-    console.log(req);
+   var movieDict = JSON.parse(req.body);
+   if (movieDict['screen'] == "Screen One Movie One") {
+       movieOneScreenOne = movieDict;
+   }
+   else if(movieDict['screen'] == "Screen One Movie Two") {
+       movieTwoScreenOne = movieDict;
+   }
+   else if(movieDict['screen'] == "Screen Two Movie One") {
+       movieOneScreenTwo = movieDict;
+   }
+   else if(movieDict['screen'] == "Screen Two Movie Two") {
+       movieTwoScreenTwo = movieDict;
+   }
+   else if (movieDict['screen'] == "Coming Soon") {
+       comingSoonDict = moviedict;
+   }
+
+
+
     res.send("It's working, I just have to format it now. -Grant");
 })
 
 app.put('/order', function (req, res) {
-
-
     var screenNo = req.query.screenNo;
     var orderNo = req.query.orderNo;
     var carMake = req.query.carMake;

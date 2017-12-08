@@ -10,16 +10,40 @@
 </style>
 
 <div align="center">
-
         Search for movie with name <input type="text" id="movieName"><br>
         <button onclick="searchMovie()" name="searchMovieButton">Search</button>
 </div>
 
+<div align="center" id = 'movieRow'>
+    <select id = 'movieSelection'>
+        <option value="" disabled selected>Select your option</option>
+    </select>
+</div>
+
+<div align="center" id="screenNumber">
+    <select>
+        <option>Screen One Movie One</option>
+        <option>Screen One Movie Two</option>
+        <option>Screen Two Movie One</option>
+        <option>Screen Two Movie Two</option>
+        <option>Coming Soon</option>
+    </select>
+</div>
+
 <div align="center">
-    <table id="movieResponse"></table>
+    <input type="text" id="runTime" placeholder="Enter Run Time In Minutes:">
+    <input type="text" id="startTime" placeHolder="Enter Start Time:">
+    <input type="text" id="IMDBLink" placeholder="Enter IMDB link:">
+    <input type="text" id="rating" placeholder="Enter rating">
+</div>
+
+<div align="center">
+    <button id="submitButton" onclick="submit()">Submit</button>
 </div>
 
 <script>
+    var searchResults;
+
     function searchMovie() {
         var movieName = document.getElementById("movieName").value;
         var percentEncodedMovieName = encodeURIComponent(movieName);
@@ -37,42 +61,46 @@
 
         var jsonResponse = JSON.parse(response);
         var results = jsonResponse["results"];
+        searchResults = results;
 
-        var sOneMOneHTML = "<td> <button id='sOneMOne'>Select</button></td>"
-        var sOneMTwoHTML = "<td> <button id='sOneMTwo'>Select</button></td>"
-        var sTwoMOneHTML = "<td> <button id='sTwoMOne'>Select</button></td>"
-        var sTwoMTwoHTML = "<td> <button id='sTwoMTwo'>Select</button></td>"
-        var comingSoon = "<td> <button id='ComingSoonButton'>Select</button></td>"
-
-        var htmlString = "<tr>" +
-            "<th>Movie Name</th>" +
-            "<th>Screen One Movie One</th>" +
-            "<th>Screen One Movie Two</th>" +
-            "<th>Screen Two Movie One</th>" +
-            "<th>Screen Two Movie Two</th>" +
-            "<th>Coming Soon</th>" +
-            "</tr>";
-
-        results.forEach(function(element) {
-            htmlString += "<tr>" + "<td>" + element["title"] + "</td>" + sOneMOneHTML + sOneMTwoHTML + sTwoMOneHTML + sTwoMTwoHTML + comingSoon + "</tr>";
-        });
-
-        $(document).on("click", "#ComingSoonButton", function(){
-            console.log("Coming Soon")
-        });
-        $(document).on("click", "#sOneMOne", function(){
-            console.log("Coming Soon")
-        });
-        $(document).on("click", "#sOneMTwo", function(){
-            console.log("Coming Soon")
-        });
-        $(document).on("click", "#sTwoMOne", function(){
-            console.log("Coming Soon")
-        });
-        $(document).on("click", "#sTwoMTwo", function(){
-            console.log("Leaving Soon")
-        });
-
-        document.getElementById("movieResponse").innerHTML = htmlString;
+        var select = document.getElementById("movieSelection");
+        for (index in results) {
+            select.options[select.options.length] = new Option(results[index]['title'], index);
+        }
     };
+
+    function submit() {
+        var movieTitle =  $("#movieSelection").find(":selected").text();
+        var screen = $("#screenNumber").find(":selected").text();
+        var runTime = document.getElementById("runTime").value;
+        var startTime = document.getElementById("startTime").value;
+        var imdbLink = document.getElementById("IMDBLink").value;
+        var rating = document.getElementById("rating").value;
+
+        var movie = searchResults[$("#movieSelection option:selected").index() - 1];
+        var posterLink = movie["poster_path"];
+
+        //create JSON for the movie
+        var newMovieDict = {};
+        newMovieDict['name'] = movieTitle;
+        newMovieDict['rating'] = rating;
+        newMovieDict['startTime'] = startTime;
+        newMovieDict['imdbLink'] = imdbLink;
+        newMovieDict['screen'] = screen;
+        newMovieDict['runTime'] = runTime;
+        newMovieDict['imgPath'] = posterLink;
+
+        $.ajax({
+            type: 'PUT',
+            url: '/set_movies',
+            data: JSON.stringify(newMovieDict),
+            success: function(data){
+                console.log('success');
+            },
+            error: function(data) {
+                console.log('error');
+            }
+        });
+    }
+
 </script>
